@@ -3,11 +3,24 @@ language: node_js
 node_js:
   - stable
 
+before_install:
+  - nvm install 8.0.0                 
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+
 install:
   - npm install
 
+
 script:
   - npm run test -- --coverage --no-cache
-
+ 
 after_success:
-  - COVERALLS_REPO_TOKEN=$coveralls_repo_token npm run coveralls
+  - ./cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.frontend.json coverage/frontend/lcov.info 
+  - ./cc-test-reporter sum-coverage coverage/codeclimate.*.json -p 1                
+  - ./cc-test-reporter upload-coverage
+ 
+
+notifications:
+  slack:
+    secure: xvI7LJCfBwmOlS5jlO2BhzBT1S/hCM42qbHgyx2xx7r1sRxDJRIqiZKvD0i687Te00eG2OQq1iKgeJpcwqABeSmYZ4yPI0bw3NgmHBXkIDQPwfxO9gA6rdzDDb29rzLSTJfiIrSIft6+sf54ys+I5m5U5RSNBvB7Q0OBe20EJHxT9B9dQlsl767HlTseUo622F/WOWEFJc6ayXfc4VuAPuQm1Ad98LF+AVTX6QM9p4OlkcuqADi2IHksDv0vSe5W2LIEIOeFMB8LK+hYr6a3O2xq6jLV/03Aid/t4nhvCTKheEf+lvrEZ8M8gOSIApzBC8VK1MlHOBXOMsWt8Hf7YsitAyzoTxj1tIPG0fWJwVWLnVpoIJ5OuTywFnPO+v6aGU4w5+HT5hs6STGMbCm7ThYPiCUkrWtriveKBLv0A2FwHkHOgTdZOfEwxJzjJoCT6Z63WjY2bCZkqgq1jX9hgVeUrsCK9Uep2DCxs/G0lSptY0vYknT/8RtU1FK4jNi9sG1Ozfc/75mKhQct/ZX/2ymiotgQ/DUZVlw5eqUkizDpvLsy4GQLfGe5NVIEvn31Rd4opQUxeOczxEWPbjHcQ7tj3JGcDEC9cvEyQPFadJMW0xbKEbaMeCmKWVkEhLGj5MrZLjuS9Uu7eEsHdweN49j7LBPcARqmCChB8qCX9H0=
