@@ -1,0 +1,15 @@
+{
+  "name": "ah-frontend-tesseract",
+  "scripts": {
+  },
+  "env": {
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+
+  ]
+}
