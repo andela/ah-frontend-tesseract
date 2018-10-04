@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import './styles/App.scss';
 import Header from "./base/Header";
 import {Route} from "react-router-dom";
-import Login from "./auth/Login";
-import HomeImg from "../static/article.jpg"
+import Login from "../containers/LoginContainer";
+import HomeImg from "../static/article.jpg";
+
 
 class App extends Component {
 
