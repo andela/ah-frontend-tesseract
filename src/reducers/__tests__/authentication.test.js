@@ -9,39 +9,35 @@ describe("test authentication login actions", () => {
   let intialState, afterState;
 
   beforeEach(() => {
-    intialState = { authentication: { userDetails: {}, isLoggedIn: false } };
+    intialState = { userDetails: {}, isLoggedIn: false  };
   });
 
   it("should return initial state", () => {
     reduceAction("UNKNOWN", "");
-    expect(afterState).toEqual(intialState);
+    expect(afterState.authentication).toEqual(intialState);
   });
 
   it("should update state on successful social login", () => {
     reduceAction(SOCIAL_LOGIN, { user: "test", email: "email" });
-    expect(afterState).toEqual({
-      authentication: {
+    expect(afterState.authentication).toEqual({
         userDetails: { user: "test", email: "email" },
         isLoggedIn: true
-      }
     });
   });
 
   it("should update state with errors on failure to login", () => {
     reduceAction(LOGIN_FAILURE, { errors: "errors" });
-    expect(afterState).toEqual({
-      authentication: { userDetails: { errors: "errors" }, isLoggedIn: false }
-    });
+    expect(afterState.authentication).toEqual({
+      userDetails: { errors: "errors" }, isLoggedIn: false }
+    );
   });
 
   it("should update state on fetch", () => {
     reduceAction(FETCHING, true);
-    expect(afterState).toEqual({
-      authentication: {
+    expect(afterState.authentication).toEqual({
         isFetching: true,
         isLoggedIn: false,
         userDetails: {}
-      }
     });
   });
 

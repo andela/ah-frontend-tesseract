@@ -1,3 +1,6 @@
+export const CREATE_NORMAL_USER = "create_normal_user";
+export const IS_LOADING = "is_loading";
+export const SIGNUP_ERROR = "sign_up_error";
 export const LOGIN = "login";
 export const INVALID_CREDENTIALS = "invalid_credentials";
 export const FETCHING = "fetching";

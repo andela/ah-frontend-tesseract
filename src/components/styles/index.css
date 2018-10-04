@@ -3,3 +3,32 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.container {
+  padding: 25px 25px 25px 25px
+}
+
+.input-field div.error {
+  position: relative;
+  top: -0.5rem;
+  left: 3rem;
+  font-size: 0.8rem;
+  color: #FF4081;
+  text-align: left;
+}
+
+.sign-up{
+  align-content: center;
+}
+.line{
+  width: 100px;
+  border-bottom: solid 1px #aaaaaa;
+}
+
+.top-margin{
+  margin-top: 1%;
+}
+
+.success-message{
+  font-size: 1.3rem;
+}

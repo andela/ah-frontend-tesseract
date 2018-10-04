@@ -32,6 +32,7 @@ const Header = (props) =>  {
                         <li><Link to='/login' onClick={logout} className="waves-effect">
                             {props.isLoggedIn ? "Logout" : "Login"}
                         </Link></li>
+                        <li><Link to='/sign-up'>Register</Link></li>
                     </ul>
                 </div>
             </nav>
