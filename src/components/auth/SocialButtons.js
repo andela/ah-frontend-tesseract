@@ -30,7 +30,7 @@ class SocialButtons extends React.Component {
     renderPopupComponent = message => {
     ReactDOM.render(
       <Popup history={this.props.history} message={message} />,
-      document.getElementById("login-container")
+      document.getElementById("social-errors")
     );
   };
   renderFacebook = () => {
