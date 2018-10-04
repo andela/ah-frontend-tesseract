@@ -1,46 +1,46 @@
 import React from 'react'
 import {Link} from "react-router-dom";
+import {connect} from "react-redux";
+import {logoutUser} from "../../actions";
 
-const Header = () =>  {
+
+const Header = (props) =>  {
+    const logout = () => {
+        if (props.isLoggedIn) {
+            props.logoutUser();
+        }
+    };
+
     return (
+        <div className="navbar-fixed">
+            <nav>
+                <div className="nav-wrapper blue-grey darken-4 row">
 
-        <nav>
-
-            <div className="row blue-grey darken">
-
-                <Link to='/'><div className="col s4">
-                    <div className="col s1">
-                        <i className="material-icons left">book</i>
-                    </div>
-
-                    <div className="col s3">
-                        <a className="brand-logo">
-                            Authors Haven
+                    <div className="col s1 left ">
+                        <a href="#" data-target="slide-out" className="sidenav-trigger show-on-large right">
+                            <i className="material-icons">menu</i>
                         </a>
                     </div>
-                </div>
-                </Link>
 
-                <div className="col s8 hide-on-med-and-down">
-
-                    <div className="col s6">
-                        <ul className="right">
-                            <li><Link to='/'>Home</Link></li>
-                            <li><Link to='/login'>Login</Link></li>
+                    <div className="brand-logo center">
+                        <Link to="/">
+                            Authors Haven <i className="material-icons left">book</i>
+                        </Link>
+                    </div>
+                    <ul className="nav-content right hide-on-med-and-down">
+                        <li><Link to='/' className="waves-effect">Home</Link></li>
+                        <li><Link to='/login' onClick={logout} className="waves-effect">
+                            {props.isLoggedIn ? "Logout" : "Login"}
+                        </Link></li>
                     </ul>
-                    </div>
-
-                    <div className="col 2 right">
-                        <input type="text" className="nav-search " placeholder="Search here" />
-                    </div>
-
                 </div>
-
-            </div>
-
-        </nav>
-
+            </nav>
+        </div>
     )
 };
 
-export { Header as default};
+const mapStateToProps = (state) => {
+    return {isLoggedIn: state.authentication.isLoggedIn};
+};
+
+export default connect(mapStateToProps, {logoutUser})(Header);
