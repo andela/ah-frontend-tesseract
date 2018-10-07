@@ -61,6 +61,7 @@ describe('login reducer', () => {
         };
         const action = {type: LOGOUT};
         const afterState = loginReducer(beforeState, action);
+        
         expect(afterState).toEqual({
             userDetails: {},
             isLoggedIn: false
