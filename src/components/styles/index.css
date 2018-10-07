@@ -32,3 +32,8 @@ body {
 .success-message{
   font-size: 1.3rem;
 }
+.container {
+  padding: 25px 25px 25px 25px
+}
+
+

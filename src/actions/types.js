@@ -7,3 +7,8 @@ export const FETCHING = "fetching";
 export const LOGOUT = "logout";
 export const SOCIAL_LOGIN = "SOCIAL_LOGIN";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
+ export const REQUEST_PASSWORD_RESET ="REQUEST_PASSWORD_RESET";
+ export const CONFIRM_PASSWORD_RESET = "COMFIRM_PASSWORD_RESET";
+ export const PROCESSING = "PROCESSING";
+ export const FAILED = "FAILED";
+

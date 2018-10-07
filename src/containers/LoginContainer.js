@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { handleLoginResponse, handleSocialResponse } from "../actions";
 import { connect } from "react-redux";
 import SocialButtons from "../components/auth/SocialButtons";
+import { Link } from 'react-router-dom';
 
 import Popup from "../components/base/Popup";
 import LoadingGif from "../static/giphy.gif";
@@ -28,13 +29,11 @@ export class Login extends React.Component {
             />
           </div>
         ) : (
-          <div className="pop-up">
             <Popup
               history={this.props.history}
               loading={LoadingGif}
               message={"Please wait"}
             />
-          </div>
         )}
         </div>
      )
@@ -52,7 +51,9 @@ export class Login extends React.Component {
             />
           </div>
           <p ref={p => (this.errorElem = p)} style={{ color: "red" }} />
+            <p><Link to='/reset_password' className="waves-effect">Forgot password ?</Link></p>
         </div>
+          <div id={'social-error'}/>
           {this.renderSocialButtons()}
         <div />
       </div>
@@ -68,7 +69,7 @@ Login.propTypes = {
   })
 };
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
   return {
     auth: state.authentication.userDetails,
     error: state.authentication.login_error,
