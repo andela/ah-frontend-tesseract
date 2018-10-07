@@ -1,10 +1,10 @@
 import React from "react";
-import { handleSocialResponse, logoutUser } from "../index";
+import { handleSocialResponse } from "../index";
 import Adapter from "enzyme-adapter-react-16";
 import configureMockStore from "redux-mock-store";
 import MockAdapter from "axios-mock-adapter";
 import { axiosInstance } from "../../globals";
-import {SOCIAL_LOGIN, LOGIN_FAILURE, FETCHING, LOGOUT} from "../types";
+import { SOCIAL_LOGIN, LOGIN_FAILURE, FETCHING } from "../types";
 import Enzyme from "enzyme";
 Enzyme.configure({ adapter: new Adapter() });
 

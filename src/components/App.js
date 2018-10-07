@@ -5,8 +5,12 @@ import {Route} from "react-router-dom";
 import Login from "../containers/LoginContainer";
 import HomeImg from "../static/article.jpg";
 import SignUp from "../containers/SignUp";
+import PasswordReset from "./auth/passwordReset"
+import PasswordResetForm from './auth/PasswordResetForm';
+
 
 class App extends Component {
+
 
     render() {
 
@@ -14,12 +18,15 @@ class App extends Component {
 
             <div className="App">
                 <Header/>
-                <Route exact path='/' component={this.HomePage}/>
-                <Route path='/login' component={Login}/>
+                <Route exact path="/" component={HomePage} />
+                <Route path="/login" component={Login} />
+                <Route path='/reset_password' component={PasswordReset}/>
+                <Route path = '/redirect_passwordReset' component={PasswordResetForm}/>
                 <Route path='/sign-up' component={SignUp}/>
             </div>
         )
     }
+
 }
 
 const HomePage = () => {

@@ -10,7 +10,7 @@ class Popup extends React.Component {
   closePopup = () => {
     // On closing the popup refresh the login page to reset state
     this.setState({ showPopup: false });
-    this.props.history.go();
+    this.props.history.go('/login');
   };
 
   render() {
