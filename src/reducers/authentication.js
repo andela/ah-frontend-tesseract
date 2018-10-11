@@ -6,6 +6,9 @@ import {
   INVALID_CREDENTIALS,
   FETCHING,
   LOGOUT,
+  USER_FROM_TOKEN,
+  USER_FROM_TOKEN_SUCCESS,
+  USER_FROM_TOKEN_FAILURE,
 } from '../actions/types';
 
 const initialState = {
@@ -33,6 +36,17 @@ export const loginReducer = (state = initialState, action) => {
 
     case LOGIN_FAILURE:
       return { ...state, userDetails: action.payload, isLoggedIn: false };
+
+    case USER_FROM_TOKEN:
+      return { ...state, isLoggedIn: false, isFetchingUserFromToken: true };
+
+    case USER_FROM_TOKEN_SUCCESS:
+      return {
+        ...state, userDetails: action.payload, isLoggedIn: true, isFetchingUserFromToken: false,
+      };
+
+    case USER_FROM_TOKEN_FAILURE:
+      return { ...state, isLoggedIn: false, isFetchingUserFromToken: false };
 
     default:
       return { ...state };

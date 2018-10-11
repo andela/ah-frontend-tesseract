@@ -1,12 +1,11 @@
 /* eslint-disable no-undef,no-use-before-define,camelcase */
-import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import configureMockStore from 'redux-mock-store';
 import MockAdapter from 'axios-mock-adapter';
 import Enzyme from 'enzyme';
 import { axiosInstance } from '../../globals';
 import { SOCIAL_LOGIN, LOGIN_FAILURE, FETCHING } from '../types';
-import { handleSocialResponse } from '../index';
+import { handleSocialResponse } from '../authentication';
 
 Enzyme.configure({ adapter: new Adapter() });
 

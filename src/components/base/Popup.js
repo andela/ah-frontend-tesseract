@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+import { Spinner } from '../profile/Profile';
 
 class Popup extends React.Component {
   constructor(props) {
@@ -14,20 +15,8 @@ class Popup extends React.Component {
     return (
       <div>
         {this.state.showPopup && (
-          <div className='outer-box'>
-            <div className='preloader-wrapper small active valign-wrapper '>
-                <div className='spinner-layer spinner-green-only'>
-                    <div className='circle-clipper left'>
-                        <div className='circle'/>
-                    </div>
-                    <div className='gap-patch'>
-                        <div className='circle'/>
-                    </div>
-                    <div className='circle-clipper right'>
-                        <div className='circle'/>
-                    </div>
-                </div>
-            </div>
+          <div className="outer-box">
+            <Spinner />
           </div>
         )}
       </div>

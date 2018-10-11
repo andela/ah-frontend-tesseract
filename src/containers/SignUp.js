@@ -1,18 +1,16 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import SignUpForm from "../components/auth/SignUpForm";
-import {createUser} from "../actions/signupActions";
-import {connect} from "react-redux";
-import {handleSocialResponse} from "../actions";
-import SocialButtons from "../components/auth/SocialButtons";
-import Popup from "../components/base/Popup";
-import LoadingGif from "../static/giphy.gif";
+import { connect } from 'react-redux';
+import SignUpForm from '../components/auth/SignUpForm';
+import { createUser } from '../actions/signupActions';
+import { handleSocialResponse } from '../actions';
+import SocialButtons from '../components/auth/SocialButtons';
+import Popup from '../components/base/Popup';
+import LoadingGif from '../static/giphy.gif';
 
 export class SignUp extends Component {
-    createUser = async data => {
-
-        await this.props.createUser(data);
-
+    createUser = async (data) => {
+      await this.props.createUser(data);
     };
 
 
@@ -69,11 +67,11 @@ const DisplaySocialButtons =(props)=>{
 };
 
 SignUp.propTypes = {
-    createUser:PropTypes.func.isRequired,
-    handleSocialResponse: PropTypes.func.isRequired,
-    history: PropTypes.shape({
-        push: PropTypes.func.isRequired
-    })
+  createUser: PropTypes.func.isRequired,
+  handleSocialResponse: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }),
 };
 
 const mapStateToProps = (state) => {
@@ -84,4 +82,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps,{handleSocialResponse,createUser})(SignUp);
+export default connect(mapStateToProps, { handleSocialResponse, createUser })(SignUp);
