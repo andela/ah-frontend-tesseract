@@ -2,7 +2,14 @@
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import reducer from '../index';
-import { SOCIAL_LOGIN, LOGIN_FAILURE, FETCHING } from '../../actions/types';
+import {
+  SOCIAL_LOGIN,
+  LOGIN_FAILURE,
+  FETCHING,
+  USER_FROM_TOKEN,
+  USER_FROM_TOKEN_FAILURE,
+  USER_FROM_TOKEN_SUCCESS,
+} from '../../actions/types';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -37,6 +44,33 @@ describe('test authentication login actions', () => {
     expect(afterState.authentication).toEqual({
       isFetching: true,
       isLoggedIn: false,
+      userDetails: {},
+    });
+  });
+
+  it('sets fetching user from token status', () => {
+    reduceAction(USER_FROM_TOKEN);
+    expect(afterState.authentication).toEqual({
+      isLoggedIn: false,
+      isFetchingUserFromToken: true,
+      userDetails: {},
+    });
+  });
+
+  it('sets user from token', () => {
+    reduceAction(USER_FROM_TOKEN_SUCCESS, { user: 'test', email: 'email' });
+    expect(afterState.authentication).toEqual({
+      isLoggedIn: true,
+      isFetchingUserFromToken: false,
+      userDetails: { user: 'test', email: 'email' },
+    });
+  });
+
+  it('fails to set user from token', () => {
+    reduceAction(USER_FROM_TOKEN_FAILURE);
+    expect(afterState.authentication).toEqual({
+      isLoggedIn: false,
+      isFetchingUserFromToken: false,
       userDetails: {},
     });
   });

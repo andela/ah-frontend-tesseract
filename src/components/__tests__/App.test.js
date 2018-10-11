@@ -7,7 +7,8 @@ import App, { HomePage } from '../App';
 Enzyme.configure({ adapter: new Adapter() });
 
 it('renders without crashing', () => {
-  shallow(<App />);
+  const getUserFromToken = jest.fn();
+  shallow(<App getUserFromToken={getUserFromToken} />);
 });
 
 it('renders home image', () => {

@@ -1,4 +1,4 @@
- /* eslint-disable no-undef,camelcase,no-shadow */
+/* eslint-disable no-undef,camelcase,no-shadow */
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import MockAdapter from 'axios-mock-adapter';

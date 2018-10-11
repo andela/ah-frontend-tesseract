@@ -19,13 +19,13 @@ export class Login extends React.Component {
 
     else if (this.props.error) {
       // this.errorElem.textContent = this.props.error.errors.error;
-        M.toast({html: this.props.error.errors.error,classes:"red darken-3"});
+      M.toast({html: this.props.error.errors.error,classes:"red darken-3"});
     }
   };
 
   renderSocialButtons = () => {
-     return ( <div>
-      {!this.props.fetchStatus ? (
+    return ( <div>
+        {!this.props.fetchStatus ? (
           <div className="social">
             <SocialButtons
               handleSocialResponse={this.props.handleSocialResponse}
@@ -33,23 +33,23 @@ export class Login extends React.Component {
             />
           </div>
         ) : (
-            <Popup
-              history={this.props.history}
-              loading={LoadingGif}
-              message={"Please wait"}
-            />
+          <Popup
+            history={this.props.history}
+            loading={LoadingGif}
+            message={"Please wait"}
+          />
         )}
-        </div>
-     )
+      </div>
+    )
   };
 
   render() {
     return (
       <div className="container" id={"login-container"}>
-          <div className="card">
-              <div className="card-panel teal lighten-2">
-                  <span className="white-text"> Login</span>
-              </div>
+        <div className="card">
+          <div className="card-panel teal lighten-2">
+            <span className="white-text"> Login</span>
+          </div>
 
           <div className="col s9 m9 l6 offset-m2">
             <div className="row">
@@ -60,12 +60,12 @@ export class Login extends React.Component {
 
             </div>
 
-              {this.renderSocialButtons()}
-              <div id="social-errors"/>
+            {this.renderSocialButtons()}
+            <div id="social-errors"/>
           </div>
 
           <div />
-          </div>
+        </div>
       </div>
     );
   }
