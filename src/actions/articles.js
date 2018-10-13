@@ -107,6 +107,7 @@ const getPostData = article => {
     title: article["title"],
     body: JSON.stringify(convertToRaw(article.body.getCurrentContent())),
     description: article["description"],
+    image: article['image'],
     tags: article.tagsList
       ? article.tagsList
           .map( tag => {

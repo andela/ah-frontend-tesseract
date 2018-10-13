@@ -12,6 +12,9 @@ class ArticleForm extends React.Component {
     render() {
         return (
             <form>
+                <div >
+                    <i id = "image-icon" onClick={this.props.handleUpload} className="small material-icons" >add_a_photo</i>
+                </div>
                 <input
                     type={"text"} name={"title"}
                     placeholder={"Title"}

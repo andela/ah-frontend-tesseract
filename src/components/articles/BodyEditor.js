@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 class BodyEditor extends React.Component {
   focus = () => this.refs.editor.focus();
   onChange = editorState => this.props.onChange(editorState);
-
   handleKeyCommand = command => {
     const newState = RichUtils.handleKeyCommand(
       this.props.editorState,

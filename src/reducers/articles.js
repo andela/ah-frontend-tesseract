@@ -22,6 +22,7 @@ export const articleState = {
   title: "",
   body: EditorState.createEmpty(),
   description: "",
+  image:"",
   onPreview: false,
   onView: false,
   onEdit: false,
