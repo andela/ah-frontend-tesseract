@@ -95,6 +95,22 @@ class Article extends React.Component {
     }
   };
 
+  handleUpload = ()=>{
+    const widget = window.cloudinary.openUploadWidget({
+        cloud_name: process.env.REACT_APP_CLOUD_NAME,
+        upload_preset: process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET,
+        cropping: true, folder: 'widgetdocs',
+        sources: ['local', 'url', 'camera', 'facebook', 'dropbox', 'search', 'instagram'],
+    }, (error, result) => {
+        if (result.event === "success") {
+            this.props.createArticle({ image: result.info.secure_url});
+            widget.close();
+            M.toast({ html:'Image uploaded successfully', classes: "green darken-3" });
+        }
+    })
+    widget.open()
+  }
+
   render() {
     return (
       <div className={"container"} id={"article-container"}>
@@ -120,6 +136,7 @@ class Article extends React.Component {
             onChange={this.onChange}
             handleInputChange={this.handleInputChange}
             preview={this.preview}
+            handleUpload={this.handleUpload}
           />
         )}
       </div>

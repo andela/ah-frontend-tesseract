@@ -66,6 +66,7 @@ export class ProfileForm extends React.Component {
       bio: this.props.profile.bio,
       location: this.props.profile.location,
       occupation: this.props.profile.occupation,
+      image:this.props.profile.image
     };
   }
 
@@ -82,9 +83,32 @@ export class ProfileForm extends React.Component {
       this.props.finishEditing(false);
     };
 
+    handleUpload = ()=>{
+      const widget = window.cloudinary.openUploadWidget({
+        cloud_name: process.env.REACT_APP_CLOUD_NAME,
+        upload_preset: process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET,
+        cropping: true, folder: 'widgetdocs',
+        sources: ['local', 'url', 'camera', 'facebook', 'dropbox', 'search', 'instagram'],
+      }, (error, result) => {
+        if (result.event === "success") {
+          this.setState({image:result.info.secure_url});
+          widget.close();
+        }
+      })
+      widget.open()
+    }
+
     render() {
       return (
         <form onSubmit={this.handleSubmit}>
+          <div onClick = {this.handleUpload}  >
+          <img id ="profile-image" value={this.state.image}
+          className = "profile-image"
+          src={this.state.image}
+           alt="add-image"
+          />
+            <i className="material-icons small grey-text">edit </i>
+          </div>
           <div className="input-field">
             <textarea id="bio" className="materialize-textarea" value={this.state.bio} onChange={this.handleChange} />
             <label htmlFor="bio" className="active">Enter your bio</label>

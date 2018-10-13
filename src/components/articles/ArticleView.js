@@ -57,8 +57,8 @@ class ArticleView extends React.Component {
             this.onDeleteArticle,
             this.onEditArticle
           )}
-        <h5>{this.props.article.title}</h5>
-
+        <h5>{this.props.article.title}</h5><br/>
+        <img  className="article-image center" src={this.props.article.image} width="900" crop="scale" align="middle" id="image" />
         <div>
           <Editor
             customStyleMap={styleMap}

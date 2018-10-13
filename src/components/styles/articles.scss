@@ -212,4 +212,16 @@ div {
       position: inherit;
     }
   }
+
+  .article-list{
+    .col{
+      .card{
+        .row{
+          .s4{
+            padding: 10px;
+          }
+        }
+      }
+    }
+  }
 }

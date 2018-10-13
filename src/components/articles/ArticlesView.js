@@ -22,21 +22,31 @@ class ArticlesView extends React.Component {
                 {
                 this.props.articles.map((article, index) => {
                     return (
-                <div className="row"  key={index}>
+                <div className="row article-list"  key={index}>
                 <div className="col s12 m12">
-                    <div role={'button'} id={`article${index}`} className="card" onClick={()=>{this.viewArticle(article.slug)}}>
-                        <div className="card-content">
+                    <div role={'button'} className="card" onClick={()=>{this.viewArticle(article.slug)}}>
+                    <div className="row">
+                        <div className={article.image?'card-content col s8':'card-content'}>
                             <span className="card-title"><h5>{article.title}</h5></span>
                             <p>{article.description}</p>
-                            </div>
-                        <div className={ 'card-action' }>
+                        </div>
+                        {article.image && <div className={'card-content col s4'}>
+                            <img className="responsive-img card-content" src={article.image} />
+                    </div> }
+
+                        </div>
+                           
+                        <div className="card-action">
                             {article.read_time} read
                         </div>
                         <div className="card-action ">
                             {article.tagsList.map(tag=>{ return tag !== ""?<div className="chip ">{tag}</div>:"" })}
                         </div>
                     </div>
+
+                  
                 </div>
+                
             </div>);
                 })}
 

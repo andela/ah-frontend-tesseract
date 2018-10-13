@@ -8,7 +8,7 @@ import {
   handleGetProfileResponse,
   handleEditProfile,
   ToggleEditingAction,
-  handleGetSpecificUserProfile,
+  handleGetSpecificUserProfile,  
 } from '../actions/profile';
 
 export class ProfileContainer extends React.Component {
@@ -69,7 +69,8 @@ const ProfileDiv = (props) => {
       <div className="">
         <div>
           <h4 className="blue-grey-textcol">{profile.username}</h4>
-          <img src={profile.image} alt="" />
+          {profile.isEditing ? null : <img className= "profile-image" 
+           src={profile.image} alt="profile-image"  />}
         </div>
         <div>
           <EmailField email={profile.email} />
@@ -153,7 +154,7 @@ const mapDispatchToProps = dispatch => ({
   getProfile: () => dispatch(handleGetProfileResponse()),
   saveProfile: profileData => dispatch(handleEditProfile(profileData)),
   toggleEditingProfile: toggle => dispatch(ToggleEditingAction(toggle)),
-  getSpecificUserProfile: username => dispatch(handleGetSpecificUserProfile(username)),
+  getSpecificUserProfile: username => dispatch(handleGetSpecificUserProfile(username)),  
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer);

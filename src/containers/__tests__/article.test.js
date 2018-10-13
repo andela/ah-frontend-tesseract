@@ -42,6 +42,25 @@ describe("articles container",()=>{
         );
         wrapper.dive().instance().preview();
     });
+      it('should load the upload widget on click.', ()=>{
+          
+        class cloudinaryMock {
+            openUploadWidget() {
+                return {
+                    open: jest.fn(),
+                    close: jest.fn()
+                }
+            }
+        }
 
+        window.cloudinary = new cloudinaryMock();
+        const widget = new cloudinaryMock().openUploadWidget
+
+          const wrapper = shallow(
+            <Article store={store} />
+          );
+          wrapper.dive().instance().handleUpload();
+
+      })
 
 });

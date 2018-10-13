@@ -42,27 +42,28 @@ class ArticlePreview extends React.Component {
  *
  */
 class StoryPreview extends React.Component {
-  render() {
-    return (
-      <div className={"col s7 article-preview"}>
-        <div className={"row"}>
-          <h5>Story Preview</h5>
-          <span onClick={this.props.edit}>
-            <i className="material-icons right edit-area">edit</i>
-          </span>
-        </div>
-        <div>
-          <h5>{this.props.article.title}</h5>
-          <Editor
-            readOnly={true}
-            editorState={this.props.article.body}
-            customStyleMap={styleMap}
-            ref={"editor"}
-          />
-        </div>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div className={"col s7 article-preview"}>
+                <div className={"row"}>
+                    <h5>Story Preview</h5>
+                    <span onClick={this.props.edit}>
+              <i className="material-icons right edit-area">edit</i>
+            </span>
+                </div>
+                <div>
+                    <h5>{this.props.article.title}</h5>
+                    <img  src={this.props.article.image} width="500" crop="scale" align="middle" />
+                    <Editor
+                        readOnly={true}
+                        editorState={this.props.article.body}
+                        customStyleMap={styleMap}
+                        ref={"editor"}
+                    />
+                </div>
+            </div>
+        )
+    }
 }
 
 ArticlePreview.propTypes = {
