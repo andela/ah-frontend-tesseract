@@ -12,8 +12,11 @@ import M from 'materialize-css';
 export class Login extends React.Component {
   loginUser = async user_data => {
     await this.props.handleLoginResponse(user_data);
+    if (this.props.auth.token){
+        this.props.history.push("/");
+        this.props.history.go();
+    }
 
-    if (this.props.auth.token) this.props.history.push("/");
     else if (this.props.error) {
       // this.errorElem.textContent = this.props.error.errors.error;
         M.toast({html: this.props.error.errors.error,classes:"red darken-3"});

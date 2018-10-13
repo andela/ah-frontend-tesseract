@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions';
 
-
-const Header = (props) => {
-  const logout = () => {
-    if (props.isLoggedIn) {
-      props.logoutUser();
-    }
-  };
+const Header = (props) =>  {
+    const logout = () => {
+        if (localStorage.getItem('token')) {
+            props.logoutUser();
+            props.history.push("/login")
+        }
+    };
 
   return (
     <div className="navbar-fixed">
@@ -32,13 +32,13 @@ const Header = (props) => {
           </div>
           <ul className="nav-content right hide-on-med-and-down">
             <li><Link to="/" className="waves-effect">Home</Link></li>
-            <li>
-              <Link to="/login" onClick={logout} className="waves-effect">
-                {props.isLoggedIn ? 'Logout' : 'Login'}
-              </Link>
-            </li>
-            <li><Link to="/sign-up">Register</Link></li>
-          </ul>
+            <li><Link to='/articles' className="waves-effect">Articles</Link></li>
+                        {localStorage.getItem('token')&&<li><Link to='/article-create' className="waves-effect">Write</Link></li>}
+           <li><Link to='/login' onClick={logout} className="waves-effect">
+                            {localStorage.getItem('token') ? "Logout" : "Login"}
+           </Link></li>
+                        {!localStorage.getItem('token') && <li><Link to='/sign-up'>Register</Link></li>}
+                    </ul>
         </div>
       </nav>
     </div>
