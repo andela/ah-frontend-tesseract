@@ -1,8 +1,5 @@
-/* eslint-disable no-undef,camelcase,no-shadow */
-
-import configureStore from 'redux-mock-store';
+ /* eslint-disable no-undef,camelcase,no-shadow */
 import thunk from 'redux-thunk';
-
 import configureMockStore from 'redux-mock-store';
 import MockAdapter from 'axios-mock-adapter';
 import { handlePasswordReset, handleRequestReset } from '../index';
@@ -14,57 +11,8 @@ import { axiosInstance } from '../../globals';
 
 jest.setTimeout(30000);
 const middlewares = [thunk];
-const mockStore = configureStore(middlewares);
+const mockStore = configureMockStore(middlewares);
 const store = mockStore({});
-
-describe('PasswordReset Actions', () => {
-  it('should execute PROCESSING action type', () => store.dispatch(handleRequestReset())
-    .then(() => {
-      const actions = store.getActions();
-      expect(actions[0].type).toEqual(PROCESSING);
-    }));
-
-  it('should execute FAILED action type', () => store.dispatch(handleRequestReset())
-    .then(() => {
-      const actions = store.getActions();
-      expect(actions[1].type).toEqual(FAILED);
-    }));
-  it('should execute FAILED action payload', () => store.dispatch(handleRequestReset())
-    .then(() => {
-      const actions = store.getActions();
-      expect(actions[1].payload).toEqual({ detail: 'Not found.' });
-    }));
-});
-
-
-describe('Comfirm PasswordReset Actions', () => {
-  it('should execute PROCESSING action type', () => store.dispatch(handlePasswordReset())
-    .then(() => {
-      const actions = store.getActions();
-      expect(actions[0].type).toEqual(PROCESSING);
-    }));
-
-  it('should execute FAILED action type', () => store.dispatch(handlePasswordReset())
-    .then(() => {
-      const actions = store.getActions();
-      expect(actions[1].type).toEqual(FAILED);
-    }));
-  it('should execute FAILED action payload', () => store.dispatch(handlePasswordReset())
-    .then(() => {
-      const actions = store.getActions();
-      expect(actions[1].payload).toEqual({ detail: 'Not found.' });
-    }));
-  it('should execute FAILED action payload', () => store.dispatch(handlePasswordReset())
-    .then(() => {
-      const actions = store.getActions();
-      expect(actions[2].type).toEqual(PROCESSING);
-    }));
-  it('should execute FAILED action payload', () => store.dispatch(handlePasswordReset())
-    .then(() => {
-      const actions = store.getActions();
-      expect(actions[3].payload).toEqual(true);
-    }));
-});
 
 
 describe('test password reset actions', () => {

@@ -1,12 +1,11 @@
 /* eslint-disable camelcase,no-return-await,no-shadow */
-
+import { axiosInstance } from '../globals';
 import {
   REQUEST_PASSWORD_RESET, CONFIRM_PASSWORD_RESET, PROCESSING, FAILED,
 } from './types';
-import { axiosInstance } from '../globals';
 
-export * from './authentication';
-
+export * from "./authentication";
+export * from "./articles"
 export const requestReset = payload => ({
   type: REQUEST_PASSWORD_RESET,
   payload,
@@ -29,8 +28,12 @@ export const failedAction = payload => ({
 });
 
 const CatchError = (dispatch, error) => {
-  dispatch(failedAction(error.response.data));
-  dispatch(processingAction(false));
+    try{
+         dispatch(failedAction(error.response.data));
+    }catch (e) {
+        
+    }
+    dispatch(processingAction(false));
 };
 
 export const handleRequestReset = user_email => async (dispatch) => {

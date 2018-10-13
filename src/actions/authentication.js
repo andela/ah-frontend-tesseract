@@ -27,7 +27,7 @@ const InvalidCredentialsError = payload => ({
   payload,
 });
 
-const FetchAction = payload => ({
+export const FetchAction = payload => ({
   type: FETCHING,
   payload,
 });
@@ -49,6 +49,7 @@ export const handleLoginResponse = user_data => async (dispatch) => {
     .then((response) => {
       dispatch(Login(response.data));
       dispatch(FetchAction(false));
+      localStorage.setItem("currentUser",response.data.username);
       localStorage.setItem('token', response.data.token);
     })
     .catch((error) => {
@@ -68,6 +69,7 @@ export const handleSocialResponse = (
     .post('/social/', data)
     .then((response) => {
       localStorage.setItem('token', response.data.token);
+      localStorage.setItem("currentUser",response.data.username);
       dispatch(socialLogin(response.data));
       dispatch(FetchAction(false));
     })
