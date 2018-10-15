@@ -2,10 +2,9 @@
 import React from 'react';
 import configureMockStore from 'redux-mock-store';
 
-import Enzyme, { shallow } from 'enzyme';
+import Enzyme, { mount,shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { Login, mapStateToProps } from '../LoginContainer';
-
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('login container', () => {
@@ -14,6 +13,7 @@ describe('login container', () => {
   const handleSocialResponse = jest.fn();
   const handleResponseMock = jest.fn();
   const history = { push: jest.fn() };
+
 
   beforeEach(() => {
     const mockStore = configureMockStore();
@@ -27,21 +27,24 @@ describe('login container', () => {
         handleLoginResponse={handleResponseMock}
         handleSocialResponse={handleSocialResponse}
         history={history}
+        fetchStatus={true}
       />,
     );
   });
 
-  it('should render social buttons', () => {
-    wrapper = shallow(
-      <Login
-        store={store}
-        handleSocialResponse={handleSocialResponse}
-        handleLoginResponse={handleResponseMock}
-        history={history}
-      />,
-    );
-    expect(wrapper.find('.social').length).toBe(1);
-  });
+    it('should render social buttons', () => {
+        wrapper = mount(
+            <Login
+                store={store}
+                handleSocialResponse={handleSocialResponse}
+                handleLoginResponse={handleResponseMock}
+                history={history}
+                fetchStatus={true}
+            />,
+        );
+        expect(wrapper.find(".social").length).toBe(1);
+    });
+
   it('maps the state to the props successfully', () => {
     const state = {
       authentication: {

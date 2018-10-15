@@ -4,10 +4,10 @@ import PropTypes from "prop-types";
 import { handleLoginResponse, handleSocialResponse } from "../actions";
 import { connect } from "react-redux";
 import SocialButtons from "../components/auth/SocialButtons";
-import { Link } from 'react-router-dom';
 
 import Popup from "../components/base/Popup";
 import LoadingGif from "../static/giphy.gif";
+import M from 'materialize-css';
 
 export class Login extends React.Component {
   loginUser = async user_data => {
@@ -15,14 +15,15 @@ export class Login extends React.Component {
 
     if (this.props.auth.token) this.props.history.push("/");
     else if (this.props.error) {
-      this.errorElem.textContent = this.props.error.errors.error;
+      // this.errorElem.textContent = this.props.error.errors.error;
+        M.toast({html: this.props.error.errors.error,classes:"red darken-3"});
     }
   };
 
   renderSocialButtons = () => {
      return ( <div>
       {!this.props.fetchStatus ? (
-          <div className="social container">
+          <div className="social">
             <SocialButtons
               handleSocialResponse={this.props.handleSocialResponse}
               history={this.props.history}
@@ -41,21 +42,27 @@ export class Login extends React.Component {
 
   render() {
     return (
-      <div className="container z-depth-2" id={"login-container"}>
-        <h1 className="blue-grey-text center subheader">Login</h1>
-        <div className="col s9 m9 l6 offset-m2">
-          <div className="row">
-            <LoginForm
-              login={this.loginUser}
-              fetchStatus={this.props.fetchStatus}
-            />
+      <div className="container" id={"login-container"}>
+          <div className="card">
+              <div className="card-panel teal lighten-2">
+                  <span className="white-text"> Login</span>
+              </div>
+
+          <div className="col s9 m9 l6 offset-m2">
+            <div className="row">
+              <LoginForm
+                login={this.loginUser}
+                fetchStatus={this.props.fetchStatus}
+              />
+
+            </div>
+
+              {this.renderSocialButtons()}
+              <div id="social-errors"/>
           </div>
-          <p ref={p => (this.errorElem = p)} style={{ color: "red" }} />
-            <p><Link to='/reset_password' className="waves-effect">Forgot password ?</Link></p>
-        </div>
-          <div id={'social-error'}/>
-          {this.renderSocialButtons()}
-        <div />
+
+          <div />
+          </div>
       </div>
     );
   }

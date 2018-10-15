@@ -58,12 +58,15 @@ class LoginForm extends React.Component {
         </div>
 
         <LoginButton fetchStatus={fetchStatus} />
+
+
       </form>
     );
   }
 }
 
 const LoginButton = ({ fetchStatus }) => (
+    <div>
   <div className="col s12 social" style={{ paddingTop: '20px' }}>
     {fetchStatus
       ? (
@@ -76,9 +79,10 @@ const LoginButton = ({ fetchStatus }) => (
                     Login
         </button>
       )
-            }
-  </div>
-
+    }
+    </div>
+    <a href='/reset_password' className="waves-effect">Forgot password ?</a>
+    </div>
 );
 
 const EmailInputField = ({ handleChange }) => (

@@ -20,6 +20,7 @@ class App extends Component {
         <Route path="/reset_password" component={PasswordReset} />
         <Route path="/redirect_passwordReset" component={PasswordResetForm} />
         <Route path="/sign-up" component={SignUp} />
+
       </div>
     );
   }

@@ -6,12 +6,10 @@ import Adapter from "enzyme-adapter-react-16";
 Enzyme.configure({ adapter: new Adapter() });
 
 it("renders without crashing", () => {
-  shallow(<Popup message={""} />);
+  shallow(<Popup  />);
 });
 
 it("popup closed when showPopup is false", () => {
-  let wrapper = shallow(<Popup message={""} />);
-  wrapper.setProps({ history: history });
+  let wrapper = shallow(<Popup />);
   wrapper.instance().closePopup();
-  expect(wrapper.find(".pop-up").length).toBe(0);
 });
