@@ -17,6 +17,7 @@ import {
 import { axiosInstance } from "../globals";
 import { FetchAction } from "./authentication";
 import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
+import { DislikeCountAction, likesCountAction } from './LikeDislikeAction';
 
 export const createArticle = payload => {
   return {
@@ -186,7 +187,10 @@ export const getArticle = article_slug => async dispatch => {
     .then(response => {
       const contentState = convertFromRaw(JSON.parse(response.data.body));
       response.data["body"] = EditorState.createWithContent(contentState);
+      console.log(response.data)
       dispatch(updateStoreArticle(response.data));
+      dispatch(likesCountAction(response.data.likes))
+      dispatch(DislikeCountAction(response.data.dislikes))
       if (
         localStorage.getItem("currentUser") === response.data.author.username
       ) {

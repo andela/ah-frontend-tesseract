@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import {getArticle, getArticles, viewArticle} from "../../actions";
 import PropTypes from "prop-types";
 import Paginate from "./Paginate";
+import LikeDislike from './ArticleLikes';
 
 class ArticlesView extends React.Component {
 
@@ -15,6 +16,8 @@ class ArticlesView extends React.Component {
          this.props.history.push(`/articles/${slugToView}`);
          this.props.history.go()
     };
+
+
 
     render() {
         return (
@@ -31,6 +34,10 @@ class ArticlesView extends React.Component {
                             </div>
                         <div className={ 'card-action' }>
                             {article.read_time} read
+                          {console.log('...................',article.slug)}
+                            <LikeDislike
+
+                            LikeCount = {article.likes} dislikeCount ={article.dislikes} articleSlug= {article.slug}/>
                         </div>
                         <div className="card-action ">
                             {article.tagsList.map(tag=>{ return tag !== ""?<div className="chip ">{tag}</div>:"" })}

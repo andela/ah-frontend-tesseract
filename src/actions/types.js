@@ -40,3 +40,11 @@ export const PROFILE_ERROR = 'PROFILE_ERROR';
 export const USER_FROM_TOKEN = 'USER_FROM_TOKEN';
 export const USER_FROM_TOKEN_SUCCESS = 'USER_FROM_TOKEN_SUCCESS';
 export const USER_FROM_TOKEN_FAILURE = 'USER_FROM_TOKEN_FAILURE';
+export const LIKE = "LIKE";
+export const DISLIKE = "DISLIKE";
+export const ERROR  = "ERROR";
+export const UNLIKE = "UNLIKE";
+export const UNDISLIKE = "UNDISLIKE";
+export const  LIKECOUNT = "LIKECOUNT"
+export const DISLIKECOUNT = "DISLIKECOUNT"
+
