@@ -1,10 +1,7 @@
 import React from "react";
 import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login";
-import TwitterLogin from "react-twitter-auth";
-import ReactDOM from "react-dom";
-import Popup from "../base/Popup";
-import {TWITTER_LOGIN_URL, TWITTER_REQUEST_URL} from "../../globals";
+import M from "materialize-css";
 
 class SocialButtons extends React.Component {
 
@@ -17,22 +14,17 @@ class SocialButtons extends React.Component {
     {
       localStorage.getItem("token")
         ? this.props.history.push("/")
-        : this.renderPopupComponent(message);
+        : M.toast({html: message,classes:"red darken-3"});
     }
   };
 
   onLoginFailure = () => {
     // Handles a failure from  the social providers (Facebook, Google,Twitter)
-    const message = "Failed to login with that social media platform";
-    this.renderPopupComponent(message);
+      const message = "Failed to login with that social media platform";
+      M.toast({html: message,classes:"red darken-3"});
   };
 
-    renderPopupComponent = message => {
-    ReactDOM.render(
-      <Popup history={this.props.history} message={message} />,
-      document.getElementById("social-errors")
-    );
-  };
+
   renderFacebook = () => {
     return (
       <FacebookLogin
@@ -49,41 +41,26 @@ class SocialButtons extends React.Component {
   renderGoogle = () => {
     return (
       <GoogleLogin
-        className=" waves-effect btn red darken-1"
+        className=" waves-effect btn red darken-1 google"
         id={"google"}
         clientId="1007255369173-nbmb7rajc6nlbmagiqf749865ua33uh5.apps.googleusercontent.com"
         onSuccess={this.onSuccess("google-oauth2")}
         onFailure={this.onLoginFailure}
       >
         <i className="fa fa-google left" />
-        Login in with google
+        Login with google
       </GoogleLogin>
-    );
-  };
-  renderTwitter = () => {
-    return (
-      <TwitterLogin
-        className=" twitter waves-effect btn row light-blue"
-        id={"twitter"}
-        loginUrl={TWITTER_LOGIN_URL}
-        onSuccess={this.onSuccess("twitter")}
-        onFailure={this.onLoginFailure}
-        requestTokenUrl={TWITTER_REQUEST_URL}
-      >
-        <i className="fa fa-twitter left" />
-        Login with twitter
-      </TwitterLogin>
     );
   };
 
   render() {
     return (
-      <div>
-        {this.renderFacebook()} <br />
-        <br />
-        {this.renderGoogle()} <br />
-        
-      </div>
+        <div className="social">
+            {this.renderFacebook()}
+            <br />
+            <br />
+            {this.renderGoogle()} <br />
+        </div>
     );
   }
 }

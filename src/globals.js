@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-export const axiosInstance = axios.create({
-  baseURL: 'https://ah-backend-tesseract-staging.herokuapp.com/api',
-});
+const API_HOST_URL=process.env.REACT_APP_API_HOST_URL;
 
-export const TWITTER_LOGIN_URL = 'https://ah-backend-tesseract-staging.herokuapp.com/oauth/complete/twitter/';
-export const TWITTER_REQUEST_URL = 'https://ah-backend-tesseract-staging.herokuapp.com/oauth/login/twitter/';
+export const axiosInstance = axios.create({
+    baseURL: API_HOST_URL
+});

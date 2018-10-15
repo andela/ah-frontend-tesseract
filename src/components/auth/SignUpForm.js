@@ -34,15 +34,10 @@ class SignUpForm extends Component {
         if (e) e.preventDefault();
 
         if (this.validate()){
-            //clear the form
             this.setState({
-                username:"",
                 usernameError:"",
-                email:"",
                 emailError:"",
-                password:"",
                 passwordError:"",
-                confirm:"",
                 confirmError:""
             });
 
@@ -147,30 +142,42 @@ class SignUpForm extends Component {
 
         return (
                 <div>
-                    {this.props.user && this.props.user.token?
-                        <span className="success-message">Account created successfully. Check your email for account activation link</span>
-                        :
+
                         <div className="card-body px-lg-5 pt-0">
 
                             <div className="row valign-wrapper" >
                                 <form onSubmit={this.handleSubmit} className="col s8 m7 l6 offset-s2 offset-m3 offset-l3"
                                       id="sign-up-form">
 
-
                                     {this.create_form_inputs()}
 
-                                    <SignUpButton loading_status={this.props.loading_status}/>
+                                    {this.props.creation_error &&
+                                        (<div className="error" >
+                                            <DisplayErrors errors={this.props.creation_error} />
+                                        </div>)
+                                    }
+
+                                    <SignUpButton fetchStatus={this.props.fetchStatus}/>
 
                                 </form>
                             </div>
                         </div>
-                    }
+
                 </div>
 
 
         );
     }
 }
+
+const DisplayErrors = (props) => {
+    let keys = Object.keys(props.errors);
+    let message = [];
+    keys.forEach( function(key) {
+        message.push(<p className="error">{props.errors[key]}</p>);
+    });
+    return message;
+};
 
 const InputField = (props) => {
     /*
@@ -192,11 +199,11 @@ const SignUpButton = (props) =>{
      * function for creating the submit button
      * */
     return(
-
+        <div className="col s12 social" style={{paddingTop: "20px"}}>
         <button type="submit"
-                    className="waves-effect waves-light btn teal lighten-2 sign-up"
+                    className="row btn sign-up"
                     id="submit-sign-up-form">
-                {props.loading_status ?
+                {props.fetchStatus ?
                     <span>Signing up ...</span>
                     :
                     <span>Sign up </span>
@@ -204,7 +211,7 @@ const SignUpButton = (props) =>{
 
 
             </button>
-
+        </div>
     )
 };
 

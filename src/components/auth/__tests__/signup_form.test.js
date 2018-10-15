@@ -1,5 +1,5 @@
 /* eslint-disable no-undef,import/no-named-as-default */
-import Enzyme, { shallow } from 'enzyme';
+import Enzyme,  {shallow, mount}  from 'enzyme';
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import SignUpForm from '../SignUpForm';
@@ -7,19 +7,19 @@ import SignUpForm from '../SignUpForm';
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('sign_up form component', () => {
-  let component;
-  const createUser = jest.fn();
-  beforeEach(() => {
-    component = shallow(<SignUpForm createUser={createUser} />);
-  });
+    let component;
+    const createUser = jest.fn();
+    beforeEach(() => {
+        component = mount(<SignUpForm createUser={createUser} />);
+    });
 
   it('renders without crashing', () => {
     expect(component).toHaveLength(1);
   });
 
-  it('test rendering loading status', () => {
-    shallow(<SignUpForm loading_status />);
-  });
+    it('test rendering loading status', () => {
+        shallow(<SignUpForm loading_status = {true} />);
+    });
 
 
   it('should fail validations with empty fields', () => {

@@ -43,7 +43,7 @@ export class PasswordReset extends React.Component {
                 <form id = "request-form" ref={form => this.formEl = form} className="col s8 m7 l6 offset-s2 offset-m3 offset-l3" noValidate>
                     <div className="input-field">
                         <i className="material-icons prefix" >email</i>
-                        <input id="email" name="email" value={this.state.email} onChange={this.handleChange} type="email" className="validate" placeholder="email" required />
+                        <input id="email" name="email" value={this.state.email} onChange={this.handleChange} type="email" className="validate" required />
                         <label htmlFor="email">Enter your email</label>
                         <div className={"invalid-feedback"} style={{ color: 'red' }} />
                     </div>

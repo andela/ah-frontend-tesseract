@@ -17,33 +17,56 @@ export class SignUp extends Component {
 
 
     render() {
-        return (
-            <div className="container">
-                <div className="card">
-                    <div className="card-panel teal lighten-2">
-                        <span className="white-text ">Create Account</span>
-                    </div>
-                    <SignUpForm createUser={this.createUser} user={this.props.user} loading_status={this.props.loading_status}/>
+        return (<div className="container">
+            <div className="card">
+                <div className="card-panel teal lighten-2">
 
-                    {this.props.fetchStatus ? (
-                        <div className="pop-up">
-                            <Popup history={this.props.history} message={"Please wait"} loading={LoadingGif}
-                            />
-                        </div>
-                        ) : (
-                        <div className="social container">
-                            <div id="social-errors"/>
-                        <SocialButtons history={this.props.history}
-                        handleSocialResponse={this.props.handleSocialResponse}
-                        />
-                        </div>
-                    )}
+                    {this.props.user && this.props.user.token ?
+                        <span
+                            className="white-text">Account created successfully. Check your email for account activation link</span>
+                        : (
+                            <span className="white-text"> Create Account</span>
+                        )
+                    }
 
                 </div>
+
+                {!this.props.user.token &&
+                    <SignUpForm createUser={this.createUser} user={this.props.user}
+                                fetchStatus={this.props.fetchStatus} creation_error={this.props.creation_error}/>
+                }
+
+                < DisplaySocialButtons fetchStatus={this.props.fetchStatus} user={this.props.user} handleSocialResponse={this.props.handleSocialResponse} history={this.props.history} />
+
+
             </div>
-        );
+        </div>);
     }
 }
+
+const DisplaySocialButtons =(props)=>{
+
+        if (props.fetchStatus)
+            return (
+            <div className="pop-up">
+                <Popup history={props.history} />
+            </div>
+            );
+
+        else if (!props.user.token)
+            return(
+
+                <div className="social">
+                    <div id="social-errors"/>
+                    <SocialButtons history={props.history}
+                                   handleSocialResponse={props.handleSocialResponse}
+                    />
+                </div>
+            );
+        else
+            return null
+
+};
 
 SignUp.propTypes = {
     createUser:PropTypes.func.isRequired,
@@ -56,8 +79,8 @@ SignUp.propTypes = {
 const mapStateToProps = (state) => {
     return{
         user:state.create_user.user,
-        error: state.create_user.creation_error,
-        loading_status: state.create_user.is_loading
+        fetchStatus: state.create_user.isFetching,
+        creation_error:state.create_user.creation_error
     }
 };
 

@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 class Popup extends React.Component {
   constructor(props) {
@@ -8,30 +7,32 @@ class Popup extends React.Component {
   }
 
   closePopup = () => {
-    // On closing the popup refresh the login page to reset state
     this.setState({ showPopup: false });
-    this.props.history.go('/login');
   };
 
   render() {
     return (
       <div>
         {this.state.showPopup && (
-          <div className={"pop-up card"}>
-            <button className="close" onClick={this.closePopup}>
-              ✖
-            </button>
-            <h6>{this.props.message}</h6>
-            {this.props.loading && <img src={this.props.loading} alt={"..."} />}
+          <div className='outer-box'>
+            <div className='preloader-wrapper small active valign-wrapper '>
+                <div className='spinner-layer spinner-green-only'>
+                    <div className='circle-clipper left'>
+                        <div className='circle'/>
+                    </div>
+                    <div className='gap-patch'>
+                        <div className='circle'/>
+                    </div>
+                    <div className='circle-clipper right'>
+                        <div className='circle'/>
+                    </div>
+                </div>
+            </div>
           </div>
         )}
       </div>
     );
   }
 }
-
-Popup.propTypes = {
-  message: PropTypes.string.isRequired
-};
 
 export default Popup;
