@@ -1,13 +1,13 @@
-import Enzyme, {shallow} from 'enzyme';
+/* eslint-disable no-undef */
+import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import LoginForm from "../Login";
-import React from "react";
+import React from 'react';
+import LoginForm from '../Login';
 
-Enzyme.configure({adapter: new Adapter() });
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('LoginForm', () => {
-
-    it('renders without crashing', function () {
-        shallow(<LoginForm/>);
-    });
+  it('renders without crashing', () => {
+    shallow(<LoginForm />);
+  });
 });
