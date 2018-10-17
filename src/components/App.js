@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './styles/App.scss';
+import HomePage from "../containers/home";
 import { Route, Switch } from 'react-router-dom';
 import Header from './base/Header';
 import Login from '../containers/LoginContainer';
-import HomeImg from '../static/article.jpg';
 import SignUp from '../containers/SignUp';
 import PasswordReset from './auth/passwordReset';
 import PasswordResetForm from './auth/PasswordResetForm';
@@ -13,7 +13,7 @@ import ArticleView from './articles/ArticleView';
 import Profile from '../containers/ProfileContainer';
 import AuthRequiredRoute from './base/AuthRequiredRoute';
 
-export default class App extends Component {
+class App extends Component {
   componentWillMount() {
     const { getUserFromToken } = this.props;
     getUserFromToken();
@@ -41,6 +41,4 @@ export default class App extends Component {
   }
 }
 
-const HomePage = () => <img src={HomeImg} alt="..." className="responsive-img" />;
-
-export { HomePage };
+export { App as default };

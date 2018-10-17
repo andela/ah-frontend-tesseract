@@ -1,3 +1,7 @@
+export const FETCH_LANDING_STORIES = 'fetch_landing_stories';
+export const FETCH_LANDING_PROFILE = 'fetch_landing_profile';
+export const FETCH_USER_FOLLOWING = 'fetch_user_following';
+export const LANDING_FETCH_FAILED = 'landing_fetch_failed';
 export const CREATE_NORMAL_USER = 'create_normal_user';
 export const SIGNUP_ERROR = 'sign_up_error';
 export const LOGIN = 'login';

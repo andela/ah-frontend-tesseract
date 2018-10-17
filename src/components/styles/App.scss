@@ -57,3 +57,38 @@
     width: 270px;
   }
 }
+
+.date_read{
+  color:rgba(0,0,0,.54)!important;
+  font-size: 0.8em;
+}
+
+.story-title{
+  font-size: 1.3em;
+  font-weight: 600;
+}
+.author{
+  color:rgba(0,0,0,.54)!important;
+}
+
+.collection  {
+  border: none;
+  .collection-item{
+    border-top: 0.5px solid rgba(224,224,224,0.8);
+    border-bottom: none;
+  }
+
+  .collection-item:last-child {
+    border-bottom: 0.5px solid rgba(224,224,224,0.8);
+  }
+
+  li{
+    a{
+      text-decoration: none;
+      color:rgba(0,0,0,0.87);
+    }
+  }
+
+
+
+}
