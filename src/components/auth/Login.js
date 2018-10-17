@@ -1,5 +1,6 @@
 import React from 'react'
-
+import {Link} from "react-router-dom";
+import { validate } from './formValidation';
 
 class LoginForm extends React.Component {
     constructor(props) {
@@ -24,41 +25,11 @@ class LoginForm extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        if (this.validate()) {
+        if (validate(this.formEl)) {
             this.props.login({'user': {...this.state}});
         }
     }
-
-    validate = () => {
-        const formLength = this.formEl.length;
-
-        if (this.formEl.checkValidity() === false) {
-            for (let i = 0; i < formLength; i++) {
-                const elem = this.formEl[i];
-                const errorLabel = elem.parentNode.querySelector('.invalid-feedback');
-
-                if (errorLabel && elem.nodeName.toLowerCase() !== 'button') {
-                    if (!elem.validity.valid) errorLabel.textContent = elem.validationMessage;
-                    else errorLabel.textContent = '';
-                }
-            }
-
-            return false;
-        }
-        else {
-
-            for(let i = 0; i < formLength; i++) {
-                const elem = this.formEl[i];
-                const errorLabel = elem.parentNode.querySelector('.invalid-feedback');
-                if (errorLabel && elem.nodeName.toLowerCase() !== 'button') {
-                    errorLabel.textContent = '';
-                }
-            }
-
-            return true;
-        }
-    };
-
+    
     render() {
         return (
             <form ref={form => this.formEl = form}

@@ -56,7 +56,7 @@ class SocialButtons extends React.Component {
         onFailure={this.onLoginFailure}
       >
         <i className="fa fa-google left" />
-        Sign up with google
+        Login in with google
       </GoogleLogin>
     );
   };
@@ -71,7 +71,7 @@ class SocialButtons extends React.Component {
         requestTokenUrl={TWITTER_REQUEST_URL}
       >
         <i className="fa fa-twitter left" />
-        Sign up with twitter
+        Login with twitter
       </TwitterLogin>
     );
   };
@@ -82,9 +82,7 @@ class SocialButtons extends React.Component {
         {this.renderFacebook()} <br />
         <br />
         {this.renderGoogle()} <br />
-        <br />
-        {this.renderTwitter()} <br />
-        <br />
+        
       </div>
     );
   }

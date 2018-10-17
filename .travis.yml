@@ -13,7 +13,7 @@ install:
 
 
 script:
-  - npm run test -- --coverage --no-cache
+  - npm run test --  -u --coverage --no-cache
  
 after_success:
   - ./cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.frontend.json coverage/frontend/lcov.info 

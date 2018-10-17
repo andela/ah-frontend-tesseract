@@ -87,6 +87,7 @@ export const handleSocialResponse = (
       } catch (error) {
         // This error could be network error since it does not have response.
         console.log("Check your internet connection");
+        
       }
     });
 };

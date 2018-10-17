@@ -1,1 +1,81 @@
+
+import {REQUEST_PASSWORD_RESET, CONFIRM_PASSWORD_RESET,PROCESSING,FAILED} from "./types";
+import {axiosInstance} from "../globals";
 export * from "./authentication";
+
+export const requestReset = (payload) => {
+    return {
+        type: REQUEST_PASSWORD_RESET,
+        payload: payload
+    };
+};
+
+
+export const confirmReset = (payload) => {
+    return {
+        type: CONFIRM_PASSWORD_RESET,
+        payload: payload
+    };
+};
+
+export const processingAction = (payload) => {
+    return {
+        type: PROCESSING,
+        payload: payload
+    };
+};
+
+export const failedAction = (payload) => {
+    return {
+        type: FAILED,
+        payload: payload
+    };
+};
+
+const CatchError = (dispatch, error) =>{
+    dispatch(failedAction(error.response.data));
+    dispatch(processingAction(false));
+}
+
+export const handleRequestReset = (user_email) => async (dispatch) => {
+
+    dispatch(processingAction(true));
+    await (
+        axiosInstance.post('/password-reset/', user_email)
+            .then((response) => {
+                localStorage.setItem('TOKEN', response.data.token);
+
+                dispatch(requestReset(response.data));
+                dispatch(processingAction(false));
+            })
+            .catch((error) => {
+                try{
+                CatchError(dispatch, error) 
+                }
+                catch(error){
+                    console.log('check your internet connection')
+                }
+            })
+    )
+};
+
+export const handlePasswordReset = (user_password) => async (dispatch) => {
+
+    dispatch(processingAction(true));
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('TOKEN')
+    }
+    return await (
+        axiosInstance.put('/password-reset/done', user_password,{headers: headers})
+            .then((response) => {
+                dispatch(confirmReset(response.data));
+                dispatch(processingAction(false));
+
+            })
+            .catch((error) => {
+                CatchError(dispatch, error) 
+            })
+    )
+};
+

@@ -3,7 +3,7 @@ import configureMockStore from "redux-mock-store";
 
 import Enzyme, { shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import { Login } from "../LoginContainer";
+import { Login , mapStateToProps} from "../LoginContainer";
 Enzyme.configure({ adapter: new Adapter() });
 
 describe("login container", () => {
@@ -39,6 +39,21 @@ describe("login container", () => {
             />
         );
         expect(wrapper.find(".social").length).toBe(1);
+    });
+    it('maps the state to the props successfully', () =>{
+        const state = {
+            authentication:{
+                userDetails: {},
+                login_error:"error",
+                isFetching: false
+            }
+        }
+        const expectedProp ={
+            auth: {},
+            error:"error",
+            fetchStatus: false
+        }
+        expect( mapStateToProps(state)).toEqual(expectedProp)
     });
 
 });
