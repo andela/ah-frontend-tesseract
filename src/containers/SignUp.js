@@ -6,7 +6,6 @@ import { createUser } from '../actions/signupActions';
 import { handleSocialResponse } from '../actions';
 import SocialButtons from '../components/auth/SocialButtons';
 import Popup from '../components/base/Popup';
-import LoadingGif from '../static/giphy.gif';
 
 export class SignUp extends Component {
     createUser = async (data) => {

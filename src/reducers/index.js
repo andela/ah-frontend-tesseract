@@ -3,7 +3,8 @@ import signUpReducer from './signupReducer';
 import { loginReducer } from './authentication';
 import { passwordResetReducer } from './passwordReset';
 import { ConfirmPasswordResetReducer } from './confirmPasswordReset';
-import { articleReducer } from './articles';
+import {articleReducer} from "./articles";
+import landingReducer from "./landingStories";
 import { profileReducer } from './profile';
 
 export default combineReducers({
@@ -12,5 +13,6 @@ export default combineReducers({
   passwordReset: passwordResetReducer,
   confirmPasswordReset: ConfirmPasswordResetReducer,
   article: articleReducer,
+  landing:landingReducer,
   profile: profileReducer,
 });

@@ -11,6 +11,3 @@ it('renders without crashing', () => {
   shallow(<App getUserFromToken={getUserFromToken} />);
 });
 
-it('renders home image', () => {
-  shallow(<HomePage />);
-});
