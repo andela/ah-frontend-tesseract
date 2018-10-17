@@ -1,10 +1,13 @@
-import configureMockStore from "redux-mock-store";
-import {LOGIN, FETCHING, INVALID_CREDENTIALS, LOGIN_FAILURE} from "../types";
-import { handleLoginResponse, logoutUser } from "../index";
-import { axiosInstance } from "../../globals";
-import MockAdapter from "axios-mock-adapter";
+/* eslint-disable no-undef */
+import configureMockStore from 'redux-mock-store';
+import MockAdapter from 'axios-mock-adapter';
+import {
+  LOGIN, FETCHING, INVALID_CREDENTIALS, LOGIN_FAILURE,
+} from '../types';
+import { handleLoginResponse, logoutUser } from '../index';
+import { axiosInstance } from '../../globals';
 
-describe("login actions", () => {
+describe('login actions', () => {
   let store;
   let httpMock;
   let loginUrl;
@@ -16,18 +19,18 @@ describe("login actions", () => {
     httpMock = new MockAdapter(axiosInstance);
     const mockStore = configureMockStore();
     store = mockStore({});
-    loginUrl = "/users/login/";
+    loginUrl = '/users/login/';
     expected = [
       { type: FETCHING, payload: true },
-      { type: FETCHING, payload: false }
+      { type: FETCHING, payload: false },
     ];
   });
 
-  it("logs in user", async () => {
-    let responseData = {
-      email: "test@email.com",
-      username: "test",
-      token: "test_token"
+  it('logs in user', async () => {
+    const responseData = {
+      email: 'test@email.com',
+      username: 'test',
+      token: 'test_token',
     };
 
     httpMock.onPost(loginUrl).reply(200, responseData);
@@ -39,11 +42,11 @@ describe("login actions", () => {
     expect(store.getActions()).toEqual(expected);
   });
 
-  it("returns error if invalid credentials provided", async () => {
-    let responseData = {
+  it('returns error if invalid credentials provided', async () => {
+    const responseData = {
       errors: {
-        error: ["A user with this email and password was not found."]
-      }
+        error: ['A user with this email and password was not found.'],
+      },
     };
 
     httpMock.onPost(loginUrl).reply(400, responseData);
@@ -56,8 +59,8 @@ describe("login actions", () => {
     expect(store.getActions()).toEqual(expected);
   });
 
-   it("should logout user", async () => {
+  it('should logout user', async () => {
     logoutUser()(store.dispatch);
-     expect(localStorage.getItem("token")).toBe(null)
+    expect(localStorage.getItem('token')).toBe(null);
   });
 });
