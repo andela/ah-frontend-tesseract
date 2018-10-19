@@ -1,5 +1,8 @@
 import React from "react";
 import { Editor, RichUtils } from "draft-js";
+import PropTypes from "prop-types";
+
+
 class BodyEditor extends React.Component {
   focus = () => this.refs.editor.focus();
   onChange = editorState => this.props.onChange(editorState);
@@ -55,6 +58,11 @@ class BodyEditor extends React.Component {
     );
   }
 }
+
+BodyEditor.propTypes = {
+  editorState: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
 // Component which handles in line control styles
 

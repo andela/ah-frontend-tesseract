@@ -42,17 +42,17 @@ const Logout = () => ({
 });
 // action creators
 
-export const handleLoginResponse = user_data => async (dispatch) => {
+export const handleLoginResponse = user_data => async dispatch => {
   dispatch(FetchAction(true));
   return await axiosInstance
     .post('/users/login/', user_data)
-    .then((response) => {
+    .then(response => {
       dispatch(Login(response.data));
       dispatch(FetchAction(false));
-      localStorage.setItem("currentUser",response.data.username);
+      localStorage.setItem('currentUser', response.data.username);
       localStorage.setItem('token', response.data.token);
     })
-    .catch((error) => {
+    .catch(error => {
       dispatch(InvalidCredentialsError(error.response.data));
       dispatch(FetchAction(false));
     });
@@ -60,20 +60,22 @@ export const handleLoginResponse = user_data => async (dispatch) => {
 
 export const handleSocialResponse = (
   socialResponse,
-  provider,
-) => async (dispatch) => {
+  provider
+) => async dispatch => {
   dispatch(FetchAction(true));
   const data = { provider, access_token: socialResponse.accessToken };
 
   return await axiosInstance
     .post('/social/', data)
-    .then((response) => {
+    .then(response => {
       localStorage.setItem('token', response.data.token);
-      localStorage.setItem("currentUser",response.data.username);
+      localStorage.setItem('currentUser', response.data.username);
+      axiosInstance.defaults.headers.common['Authorization'] =
+        response.data.token;
       dispatch(socialLogin(response.data));
       dispatch(FetchAction(false));
     })
-    .catch((error) => {
+    .catch(error => {
       try {
         // dispatch the errors from the authors haven api
         dispatch(loginFailure(error.response.data));
@@ -85,7 +87,7 @@ export const handleSocialResponse = (
     });
 };
 
-export const logoutUser = () => (dispatch) => {
+export const logoutUser = () => dispatch => {
   dispatch(Logout());
   localStorage.removeItem('token');
 };

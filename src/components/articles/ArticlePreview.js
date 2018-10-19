@@ -1,7 +1,7 @@
 import React from "react";
 import { Editor }from "draft-js";
 import {styleMap} from "./BodyEditor";
-import M from 'materialize-css';
+import PropTypes from "prop-types";
 
 class ArticlePreview extends React.Component {
 
@@ -53,6 +53,11 @@ class StoryPreview extends React.Component {
     }
 }
 
-
+ArticlePreview.propTypes = {
+  article: PropTypes.object.isRequired,
+  edit: PropTypes.func.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  fetchStatus: PropTypes.bool.isRequired
+};
 
 export default ArticlePreview;

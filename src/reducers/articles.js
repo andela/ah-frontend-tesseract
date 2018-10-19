@@ -27,7 +27,7 @@ export const articleState = {
   slug: "",
   showList: false,
     fetchStatus:false,
-    isOwner:"",
+    isOwner:false,
   message: "",
   articlesList: [],
 };

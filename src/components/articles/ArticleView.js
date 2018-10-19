@@ -13,6 +13,7 @@ import Modal from '../common/Modal';
 import {connect} from "react-redux";
 import M from "materialize-css";
 import Popup from "../base/Popup";
+import PropTypes from "prop-types";
 
 class ArticleView extends React.Component {
 
@@ -82,6 +83,21 @@ class ArticleView extends React.Component {
 
   }
 }
+
+ArticleView.propTypes = {
+  onView: PropTypes.bool.isRequired,
+  onDelete: PropTypes.bool.isRequired,
+  isOwner: PropTypes.bool.isRequired,
+  getArticle: PropTypes.func.isRequired,
+  deleteAction: PropTypes.func.isRequired,
+  editArticle: PropTypes.func.isRequired,
+  viewArticle: PropTypes.func.isRequired,
+  deleteArticle: PropTypes.func.isRequired,
+  article: PropTypes.object.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  })
+};
 
 const mapStateToProps = state => {
   return {

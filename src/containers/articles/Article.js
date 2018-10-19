@@ -12,6 +12,8 @@ import {
 } from "../../actions";
 import ArticlePreview from "../../components/articles/ArticlePreview";
 import M from "materialize-css";
+import PropTypes from "prop-types";
+
 
 class Article extends React.Component {
 
@@ -33,6 +35,8 @@ class Article extends React.Component {
       case "description":
         this.props.createArticle({ description: event.target.value });
         break;
+      default:
+          break;
     }
   };
 
@@ -101,6 +105,23 @@ class Article extends React.Component {
     );
   }
 }
+
+Article.propTypes = {
+  article: PropTypes.object.isRequired,
+  onEdit: PropTypes.bool.isRequired,
+  fetchStatus: PropTypes.bool.isRequired,
+  onPreview: PropTypes.bool.isRequired,
+  message: PropTypes.string.isRequired,
+  clearMessage: PropTypes.func.isRequired,
+  createArticle: PropTypes.func.isRequired,
+  publishArticle: PropTypes.func.isRequired,
+  previewArticle: PropTypes.func.isRequired,
+  viewArticle: PropTypes.func.isRequired,
+  updateArticle: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  })
+};
 
 const mapStateToProps = state => {
   return {
