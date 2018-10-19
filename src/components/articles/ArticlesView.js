@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import {getArticle, getArticles, viewArticle} from "../../actions";
-import M from "materialize-css";
+import PropTypes from "prop-types";
 
 class ArticlesView extends React.Component {
 
@@ -40,6 +40,15 @@ class ArticlesView extends React.Component {
         );
     }
 }
+
+ArticlesView.propTypes = {
+  articles: PropTypes.array.isRequired,
+  getArticles: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+    go: PropTypes.func.isRequired
+  })
+};
 
 const mapStateToProps = state => {
     return {

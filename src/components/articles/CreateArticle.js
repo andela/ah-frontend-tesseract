@@ -1,5 +1,7 @@
 import React from "react";
 import BodyEditor from "./BodyEditor";
+import PropTypes from "prop-types";
+
 
 class ArticleForm extends React.Component {
 
@@ -32,6 +34,14 @@ class ArticleForm extends React.Component {
     );
   }
 }
+
+ArticleForm.propTypes = {
+  onEdit: PropTypes.bool.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  updateArticle: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  article: PropTypes.object.isRequired
+};
 
 const SubmitButtons = props => {
   return (<div>

@@ -1,8 +1,15 @@
 import axios from 'axios';
 
-const API_HOST_URL=process.env.REACT_APP_API_HOST_URL;
+const API_HOST_URL = process.env.REACT_APP_API_HOST_URL;
 
-export const axiosInstance = axios.create({
+let settings = {
+  baseURL: API_HOST_URL
+};
+
+if (localStorage.getItem('token')) {
+  settings = {
     baseURL: API_HOST_URL,
-    headers: {'Authorization': localStorage.getItem('token')?localStorage.getItem('token'):""}
-});
+    headers: { Authorization: localStorage.getItem('token') }
+  };
+}
+export const axiosInstance = axios.create(settings);
