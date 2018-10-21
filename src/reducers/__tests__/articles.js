@@ -1,11 +1,11 @@
 import {articleReducer,articleState} from "../articles";
 import {
     ARTICLE_FAILURE,
-    ARTICLE_SUCCESS,
+    ARTICLE_SUCCESS, CLEAR_MESSAGE,
     CREATE_ARTICLE,
     DELETE_ARTICLE,
     EDIT_ARTICLE, FETCHING,
-    PREVIEW_ARTICLE, UPDATE_AUTHOR, UPDATE_STORE_ARTICLE,
+    PREVIEW_ARTICLE, UPDATE_AUTHOR, UPDATE_SLUG, UPDATE_STORE_ARTICLE,
     VIEW_ARTICLE, VIEW_ARTICLES
 } from "../../actions/types";
 import {EditorState} from "draft-js";
@@ -99,6 +99,21 @@ describe('test articles reducer', () => {
         const action = {type: FETCHING, payload: true};
         const afterState = articleReducer(beforeState, action);
         beforeState.fetchStatus=true;
+        expect(afterState).toEqual(beforeState);
+    });
+
+    it('test update slug', () => {
+        const action = {type: UPDATE_SLUG, payload: ""};
+        const afterState = articleReducer(beforeState, action);
+        beforeState.fetchStatus=true;
+        expect(afterState).toEqual(beforeState);
+    });
+
+     it('test clear message', () => {
+        const action = {type: CLEAR_MESSAGE};
+        const afterState = articleReducer(beforeState, action);
+        beforeState.fetchStatus=true;
+        beforeState.message="";
         expect(afterState).toEqual(beforeState);
     });
 

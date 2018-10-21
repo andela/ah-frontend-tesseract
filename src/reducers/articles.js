@@ -12,7 +12,7 @@ import {
     FETCHING,
     UPDATE_AUTHOR,
     UPDATE_SLUG,
-    CLEAR_MESSAGE
+    CLEAR_MESSAGE, PAGINATION_DATA
 } from "../actions/types";
 
 export const articleState = {
@@ -30,6 +30,9 @@ export const articleState = {
     isOwner:false,
   message: "",
   articlesList: [],
+    paginationData:{
+        totalPages:0
+    }
 };
 
 export const articleReducer = (state = articleState, action) => {
@@ -46,7 +49,7 @@ export const articleReducer = (state = articleState, action) => {
     case DELETE_ARTICLE:
       return { ...state, onDelete: action.payload };
     case VIEW_ARTICLES:
-      return { ...state, articlesList: action.payload , showList: true};
+      return { ...state, articlesList: action.payload , showList: true };
     case ARTICLE_SUCCESS:
       return {...state, message: action.payload};
     case UPDATE_STORE_ARTICLE:
@@ -61,7 +64,8 @@ export const articleReducer = (state = articleState, action) => {
       return {...state, slug: action.payload};
     case CLEAR_MESSAGE:
       return {...state, message: ""};
-
+    case PAGINATION_DATA:
+      return {...state, paginationData: action.payload};
     default:
       return { ...state };
   }
