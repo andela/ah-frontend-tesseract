@@ -1,13 +1,17 @@
 import {
-    CREATE_ARTICLE,
-    PREVIEW_ARTICLE,
-    VIEW_ARTICLE,
-    EDIT_ARTICLE,
-    DELETE_ARTICLE,
-    VIEW_ARTICLES,
-    ARTICLE_SUCCESS,
-    ARTICLE_FAILURE,
-    UPDATE_STORE_ARTICLE, UPDATE_AUTHOR, UPDATE_SLUG, CLEAR_MESSAGE
+  CREATE_ARTICLE,
+  PREVIEW_ARTICLE,
+  VIEW_ARTICLE,
+  EDIT_ARTICLE,
+  DELETE_ARTICLE,
+  VIEW_ARTICLES,
+  ARTICLE_SUCCESS,
+  ARTICLE_FAILURE,
+  UPDATE_STORE_ARTICLE,
+  UPDATE_AUTHOR,
+  UPDATE_SLUG,
+  CLEAR_MESSAGE,
+  PAGINATION_DATA
 } from "./types";
 import { axiosInstance } from "../globals";
 import { FetchAction } from "./authentication";
@@ -90,46 +94,80 @@ export const failure = payload => {
   };
 };
 
+export const paginationData = (pageNumber, totalPages) => {
+  return {
+    type: PAGINATION_DATA,
+    payload: {
+      totalPages,
+      currentPage: pageNumber,
+      hasNextPage: totalPages - pageNumber > 0,
+      hasPreviousPage: pageNumber > 1,
+      previousPage: pageNumber - 1,
+      nextPage: pageNumber + 1,
+      range: pageRange(pageNumber, totalPages)
+    }
+  };
+};
 
- const getPostData = article => {
-     return {
-         title: article["title"],
-         body: JSON.stringify(convertToRaw(article.body.getCurrentContent())),
-         description: article["description"]
-     };
- };
+const pageRange = (pageNumber, totalPages) => {
+  if (totalPages - pageNumber >= 5) {
+    return [
+      pageNumber,
+      pageNumber + 1,
+      pageNumber + 2,
+      pageNumber + 3,
+      pageNumber + 4
+    ];
+  }
+  return [
+    totalPages - 4,
+    totalPages - 3,
+    totalPages - 2,
+    totalPages - 1,
+    totalPages
+  ];
+};
+
+const getPostData = article => {
+  return {
+    title: article["title"],
+    body: JSON.stringify(convertToRaw(article.body.getCurrentContent())),
+    description: article["description"]
+  };
+};
 
 export const clearMessage = dispatch => {
-    dispatch({type:CLEAR_MESSAGE});
+  dispatch({ type: CLEAR_MESSAGE });
 };
 
 export const publishArticle = article => async dispatch => {
   // extract data from the article in store to submit to the API
-    dispatch(FetchAction(true));
+  dispatch(FetchAction(true));
 
   return await axiosInstance
     .post("/article/create", getPostData(article))
     .then(response => {
-
       dispatch(updateSlug(response.data.slug));
       const message = "Article published successfully";
       dispatch(success(message));
-      dispatch(FetchAction(false));
-    })
+      dispatch(FetchAction(false));})
     .catch(error => {
-        try {
-            const message = "Failed to publish Article  fields [ ";
-      dispatch(
-        failure(
-          message + Object.keys(error.response.data.errors) + " ] are required"
-        )
-      );
-      dispatch(previewArticle(true));
-        }catch (e) {
-            dispatch(failure("Failed to publish Article"));
-         console.log(e)
-        }
-        dispatch(FetchAction(false));
+      try {
+        const message = "Failed to publish Article  fields [ ";
+        dispatch(
+          failure(
+            message +
+              Object.keys(error.response.data.errors) +
+              " ] are required"
+          ));
+
+        dispatch(previewArticle(true));
+
+      } catch (e) {
+        dispatch(failure("Failed to publish Article"));
+        console.log(e);}
+
+      dispatch(FetchAction(false));
     });
 };
 
@@ -142,8 +180,10 @@ export const getArticle = article_slug => async dispatch => {
       response.data["body"] = EditorState.createWithContent(contentState);
 
       dispatch(updateStoreArticle(response.data));
-      if(localStorage.getItem("currentUser") === response.data.author.username){
-          dispatch(updateAuthor(true))
+      if (
+        localStorage.getItem("currentUser") === response.data.author.username
+      ) {
+        dispatch(updateAuthor(true));
       }
       dispatch(viewArticle(true));
       dispatch(FetchAction(false));
@@ -155,14 +195,15 @@ export const getArticle = article_slug => async dispatch => {
     });
 };
 
-export const getArticles = showlist => async dispatch => {
-    dispatch(FetchAction(true));
+export const getArticles = pageNumber => async dispatch => {
+  dispatch(FetchAction(true));
   return await axiosInstance
-    .get("/articles?page=9000")
+    .get(`/articles?page=${pageNumber}`)
     .then(response => {
       // get list if articles from API
       dispatch(previewArticle(false));
       dispatch(viewArticles(response.data.articles));
+      dispatch(paginationData(pageNumber, response.data.number_of_pages));
       dispatch(FetchAction(false));
     })
     .catch(error => {
