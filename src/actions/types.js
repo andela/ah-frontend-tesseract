@@ -29,6 +29,7 @@ export const UPDATE_AUTHOR = 'UPDATE_AUTHOR';
 export const UPDATE_SLUG = 'UPDATE_SLUG';
 export const CLEAR_MESSAGE = 'CLEAR_MESSAGE';
 export const PAGINATION_DATA = 'PAGINATION_DATA';
+export const ARTICLE_TAGS = 'ARTICLE_TAGS';
 
 // Profile action types
 export const FETCHING_PROFILE = 'FETCHING_PROFILE';

@@ -3,12 +3,13 @@ import ArticleForm from "../../components/articles/CreateArticle";
 import "../../components/styles/articles.scss";
 import { connect } from "react-redux";
 import {
-    createArticle,
-    previewArticle,
-    publishArticle,
-    viewArticle,
-    updateArticle,
-    clearMessage
+  createArticle,
+  previewArticle,
+  publishArticle,
+  viewArticle,
+  updateArticle,
+  clearMessage,
+  getArticleTags
 } from "../../actions";
 import ArticlePreview from "../../components/articles/ArticlePreview";
 import M from "materialize-css";
@@ -16,15 +17,26 @@ import PropTypes from "prop-types";
 
 
 class Article extends React.Component {
+  async componentWillMount() {
+    await this.props.getArticleTags(true);
+  }
 
   componentDidMount() {
-      if (this.props.onEdit){
-          this.props.createArticle(this.props.storeArticle);
-      }
+    if (this.props.onEdit) {
+      this.props.createArticle(this.props.storeArticle);
+    }
   }
 
   onChange = editorState => {
     this.props.createArticle({ body: editorState });
+  };
+
+  getOptions = () => {
+    return this.props.tags
+      ? this.props.tags.map(tag => {
+          return { label: tag, value: tag };
+        })
+      : "";
   };
 
   handleInputChange = event => {
@@ -40,22 +52,29 @@ class Article extends React.Component {
     }
   };
 
+  onTagChange = selectedTags => {
+    this.props.createArticle({
+      tagsList: selectedTags.map(value => {
+        return value.value;
+      })
+    });
+  };
+
   preview = () => {
     this.props.previewArticle(true);
   };
-
 
   onSubmit = async event => {
     event.preventDefault();
 
     await this.props.publishArticle(this.props.article);
-    if (this.props.article.slug){
-        this.props.viewArticle(false);
-         this.props.history.push(`/articles/${this.props.article.slug}`);
-          M.toast({html: this.props.message,classes:"green darken-3"});
-        this.props.previewArticle(false)
-    }else{
-       M.toast({html: this.props.message,classes:"red darken-3"});
+    if (this.props.article.slug) {
+      this.props.viewArticle(false);
+      this.props.history.push(`/articles/${this.props.article.slug}`);
+      M.toast({ html: this.props.message, classes: "green darken-3" });
+      this.props.previewArticle(false);
+    } else {
+      M.toast({ html: this.props.message, classes: "red darken-3" });
     }
   };
 
@@ -65,33 +84,35 @@ class Article extends React.Component {
   };
 
   updateArticle = async event => {
-      event.preventDefault();
-      await this.props.updateArticle(this.props.article);
+    event.preventDefault();
+    await this.props.updateArticle(this.props.article);
 
-      if (this.props.article.slug) {
-          this.props.history.push(`/articles/${this.props.article.slug}`);
-          M.toast({html: this.props.message,classes:"green darken-3"})
-      } else {
-          M.toast({html: this.props.message, classes: "red darken-3"});
-      }
+    if (this.props.article.slug) {
+      this.props.history.push(`/articles/${this.props.article.slug}`);
+      M.toast({ html: this.props.message, classes: "green darken-3" });
+    } else {
+      M.toast({ html: this.props.message, classes: "red darken-3" });
+    }
   };
 
   render() {
     return (
       <div className={"container"} id={"article-container"}>
-
         {this.props.onPreview ? (
           <ArticlePreview
+            options={this.getOptions()}
             article={this.props.article}
             message={this.props.message}
-            clearMessage={this.props.clearMessage}
+            onTagChange={this.onTagChange}
             fetchStatus={this.props.fetchStatus}
             edit={this.onPreviewEdit}
             handleInputChange={this.handleInputChange}
             onSubmit={this.onSubmit}
           />
-        ) :
+        ) : (
           <ArticleForm
+            options={this.getOptions()}
+            onTagChange={this.onTagChange}
             article={this.props.article}
             onEdit={this.props.onEdit}
             fetchStatus={this.props.fetchStatus}
@@ -100,7 +121,7 @@ class Article extends React.Component {
             handleInputChange={this.handleInputChange}
             preview={this.preview}
           />
-        }
+        )}
       </div>
     );
   }
@@ -126,6 +147,7 @@ Article.propTypes = {
 const mapStateToProps = state => {
   return {
     article: state.article,
+    tags: state.article.apiTags,
     storeArticle: state.article.apiArticle,
     onPreview: state.article.onPreview,
     onView: state.article.onView,
@@ -143,6 +165,7 @@ export default connect(
     publishArticle,
     viewArticle,
     updateArticle,
-      clearMessage
+    clearMessage,
+    getArticleTags
   }
 )(Article);

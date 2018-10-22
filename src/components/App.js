@@ -30,7 +30,7 @@ class App extends Component {
           <Route path="/sign-up" component={SignUp} />
           <Route path="/reset_password" component={PasswordReset} />
           <Route path="/redirect_passwordReset" component={PasswordResetForm} />
-          <Route path="/article-create" component={Article} />
+          <AuthRequiredRoute path="/article-create" component={Article} />
           <Route exact path="/articles" component={ArticlesView} />
           <Route path="/articles/:slug" component={ArticleView} />
           <Route path="/profile/:username" component={Profile} />

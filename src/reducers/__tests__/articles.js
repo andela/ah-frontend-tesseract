@@ -1,7 +1,7 @@
 import {articleReducer,articleState} from "../articles";
 import {
     ARTICLE_FAILURE,
-    ARTICLE_SUCCESS, CLEAR_MESSAGE,
+    ARTICLE_SUCCESS, ARTICLE_TAGS,  CLEAR_MESSAGE,
     CREATE_ARTICLE,
     DELETE_ARTICLE,
     EDIT_ARTICLE, FETCHING,
@@ -102,14 +102,25 @@ describe('test articles reducer', () => {
         expect(afterState).toEqual(beforeState);
     });
 
-    it('test update slug', () => {
-        const action = {type: UPDATE_SLUG, payload: ""};
+
+     it('test update slug', () => {
+        const action = {type: UPDATE_SLUG, payload:"new-slug"};
         const afterState = articleReducer(beforeState, action);
         beforeState.fetchStatus=true;
+        beforeState.slug="new-slug";
         expect(afterState).toEqual(beforeState);
     });
 
-     it('test clear message', () => {
+    it('test update tagsList', () => {
+        const action = {type: ARTICLE_TAGS, payload: ["tag"]};
+        const afterState = articleReducer(beforeState, action);
+        beforeState.fetchStatus=true;
+        beforeState.apiTags=["tag"];
+        expect(afterState).toEqual(beforeState);
+    });
+
+
+    it('test clear message', () => {
         const action = {type: CLEAR_MESSAGE};
         const afterState = articleReducer(beforeState, action);
         beforeState.fetchStatus=true;

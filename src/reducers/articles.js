@@ -12,11 +12,13 @@ import {
     FETCHING,
     UPDATE_AUTHOR,
     UPDATE_SLUG,
-    CLEAR_MESSAGE, PAGINATION_DATA
+    CLEAR_MESSAGE,
+    PAGINATION_DATA,
+    ARTICLE_TAGS
 } from "../actions/types";
 
 export const articleState = {
-  apiArticle:{},
+  apiArticle: {},
   title: "",
   body: EditorState.createEmpty(),
   description: "",
@@ -26,20 +28,28 @@ export const articleState = {
   onDelete: false,
   slug: "",
   showList: false,
-    fetchStatus:false,
-    isOwner:false,
+  fetchStatus: false,
+  isOwner: false,
   message: "",
   articlesList: [],
     paginationData:{
         totalPages:0
-    }
+    },
+  apiTags: [],
+  tagsList: [] // These are form tags
 };
 
 export const articleReducer = (state = articleState, action) => {
   switch (action.type) {
     case CREATE_ARTICLE:
       const payload = action.payload;
-      return { ...state, ...payload };
+      const tagsList = action.payload.tagsList
+        ? action.payload.tagsList.map(tag => {
+            return { label: tag, value: tag };
+          })
+        : state.tagsList;
+
+      return { ...state, ...payload, tagsList: tagsList };
     case PREVIEW_ARTICLE:
       return { ...state, onPreview: action.payload };
     case VIEW_ARTICLE:
@@ -51,21 +61,24 @@ export const articleReducer = (state = articleState, action) => {
     case VIEW_ARTICLES:
       return { ...state, articlesList: action.payload , showList: true };
     case ARTICLE_SUCCESS:
-      return {...state, message: action.payload};
+      return { ...state, message: action.payload };
     case UPDATE_STORE_ARTICLE:
-      return {...state, apiArticle:action.payload};
+      return { ...state, apiArticle: action.payload };
     case ARTICLE_FAILURE:
-      return {...state, message: action.payload};
+      return { ...state, message: action.payload };
     case UPDATE_AUTHOR:
-      return {...state, isOwner: action.payload};
+      return { ...state, isOwner: action.payload };
     case FETCHING:
-      return {...state, fetchStatus: action.payload};
+      return { ...state, fetchStatus: action.payload };
     case UPDATE_SLUG:
-      return {...state, slug: action.payload};
+      return { ...state, slug: action.payload };
     case CLEAR_MESSAGE:
       return {...state, message: ""};
     case PAGINATION_DATA:
       return {...state, paginationData: action.payload};
+    case ARTICLE_TAGS:
+      return { ...state, apiTags: action.payload };
+
     default:
       return { ...state };
   }
