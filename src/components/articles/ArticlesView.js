@@ -28,9 +28,12 @@ class ArticlesView extends React.Component {
                         <div className="card-content">
                             <span className="card-title"><h5>{article.title}</h5></span>
                             <p>{article.description}</p>
-                        </div>
-                        <div className="card-action">
+                            </div>
+                        <div className={ 'card-action' }>
                             {article.read_time} read
+                        </div>
+                        <div className="card-action ">
+                            {article.tagsList.map(tag=>{ return tag !== ""?<div className="chip ">{tag}</div>:"" })}
                         </div>
                     </div>
                 </div>

@@ -1,11 +1,12 @@
 import React from "react";
 import Enzyme from "enzyme";
 import {
-  deleteArticle,
-  getArticle,
-  getArticles,
-  publishArticle,
-  updateArticle
+    deleteArticle,
+    getArticle,
+    getArticles,
+    getArticleTags,
+    publishArticle,
+    updateArticle
 } from "../articles";
 import Adapter from "enzyme-adapter-react-16";
 import configureMockStore from "redux-mock-store";
@@ -22,7 +23,8 @@ import {
   UPDATE_SLUG,
   UPDATE_STORE_ARTICLE,
   VIEW_ARTICLE,
-  VIEW_ARTICLES
+  VIEW_ARTICLES,
+    ARTICLE_TAGS
 } from "../types";
 import { EditorState, convertFromRaw } from "draft-js";
 
@@ -46,7 +48,9 @@ describe("test articles", () => {
     response_data,
     httpMock,
     post_article,
-    list_response;
+    list_response,
+    tags_response,
+    delete_response;
   const flushAllPromises = () => new Promise(resolve => setImmediate(resolve));
 
   beforeEach(() => {
@@ -62,7 +66,8 @@ describe("test articles", () => {
       slug: "fake_slug",
       description: "description"
     };
-    response_data = {
+        tags_response = {tags:["tag","tag1"]};
+     response_data = {
       title: "title",
       body: editorBody,
       slug: "fake_slug",
@@ -98,6 +103,7 @@ describe("test articles", () => {
       number_of_pages: 5,
       error: { response: { data: { errors: "" } } }
     };
+    delete_response = {message:"Deleted successfully"}
   });
 
   it("should create article", async () => {
@@ -217,15 +223,52 @@ describe("test articles", () => {
     ]);
   });
 
-  it("should fail delete an article", async () => {
-    httpMock
-      .onGet(`/article/delete/${post_article.slug}`)
-      .reply(400, list_response);
-    deleteArticle(post_article.slug)(store.dispatch);
-    await flushAllPromises();
-    expect(store.getActions()).toEqual([
-      { payload: true, type: DELETE_ARTICLE },
-      { type: ARTICLE_FAILURE, payload: "Failed to delete Article" }
-    ]);
-  });
+     it("should delete an article", async () => {
+        httpMock.onDelete('/article/delete/slug-a').reply(200,delete_response);
+        deleteArticle('slug-a')(store.dispatch);
+        await flushAllPromises();
+        expect(store.getActions()).toEqual([
+                {payload: true,type:DELETE_ARTICLE},
+                {type:ARTICLE_SUCCESS,payload:"Deleted successfully"},
+            {type:DELETE_ARTICLE, payload:false}
+            ]
+        )
+    });
+
+    it("should fail delete an article", async () => {
+        httpMock.onDelete(`/article/delete/${post_article.slug}`).reply(400,list_response);
+        deleteArticle(post_article.slug)(store.dispatch);
+        await flushAllPromises();
+        expect(store.getActions()).toEqual([
+                {payload: true,type:DELETE_ARTICLE},
+                {type:ARTICLE_FAILURE,payload:"Failed to delete Article"}
+            ]
+        )
+    });
+
+        it("should get list of tags", async () => {
+        httpMock.onGet('/article/tags').reply(200,tags_response);
+        getArticleTags(true)(store.dispatch);
+        await flushAllPromises();
+        expect(store.getActions()).toEqual([
+            {payload: true,type:FETCHING},
+            {type:ARTICLE_TAGS,payload:tags_response.tags},
+            {type:FETCHING,payload:false},
+            ]
+        )
+    });
+
+
+        it("should fail to get a list tags", async () => {
+        httpMock.onGet('/article/tags').reply(400,"Failed to get Tags");
+        getArticleTags(true)(store.dispatch);
+        await flushAllPromises();
+        expect(store.getActions()).toEqual([
+            {payload: true,type:FETCHING},
+            {type:ARTICLE_FAILURE,payload:"Failed to get Tags"},
+            {type:FETCHING,payload:false},
+            ]
+        )
+    });
+
 });

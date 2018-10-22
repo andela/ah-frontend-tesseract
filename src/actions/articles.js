@@ -11,7 +11,8 @@ import {
   UPDATE_AUTHOR,
   UPDATE_SLUG,
   CLEAR_MESSAGE,
-  PAGINATION_DATA
+  PAGINATION_DATA,
+  ARTICLE_TAGS
 } from "./types";
 import { axiosInstance } from "../globals";
 import { FetchAction } from "./authentication";
@@ -94,6 +95,24 @@ export const failure = payload => {
   };
 };
 
+export const updateTagsList = payload => {
+  return {
+    type: ARTICLE_TAGS,
+    payload
+  };
+};
+
+const getPostData = article => {
+  return {
+    title: article["title"],
+    body: JSON.stringify(convertToRaw(article.body.getCurrentContent())),
+    description: article["description"],
+    tags: article.tagsList
+      ? article.tagsList
+          .map( tag => {
+            return tag.value;
+          } ) .join(",") : ""
+  } };
 export const paginationData = (pageNumber, totalPages) => {
   return {
     type: PAGINATION_DATA,
@@ -128,14 +147,6 @@ const pageRange = (pageNumber, totalPages) => {
   ];
 };
 
-const getPostData = article => {
-  return {
-    title: article["title"],
-    body: JSON.stringify(convertToRaw(article.body.getCurrentContent())),
-    description: article["description"]
-  };
-};
-
 export const clearMessage = dispatch => {
   dispatch({ type: CLEAR_MESSAGE });
 };
@@ -159,17 +170,14 @@ export const publishArticle = article => async dispatch => {
             message +
               Object.keys(error.response.data.errors) +
               " ] are required"
-          ));
-
+          ) );
         dispatch(previewArticle(true));
-
       } catch (e) {
         dispatch(failure("Failed to publish Article"));
-        console.log(e);}
-
+        console.log(e);
+      }
       dispatch(FetchAction(false));
-    });
-};
+    } ) };
 
 export const getArticle = article_slug => async dispatch => {
   dispatch(FetchAction(true));
@@ -178,7 +186,6 @@ export const getArticle = article_slug => async dispatch => {
     .then(response => {
       const contentState = convertFromRaw(JSON.parse(response.data.body));
       response.data["body"] = EditorState.createWithContent(contentState);
-
       dispatch(updateStoreArticle(response.data));
       if (
         localStorage.getItem("currentUser") === response.data.author.username
@@ -248,5 +255,21 @@ export const deleteArticle = article_slug => async dispatch => {
       const message = "Failed to delete Article";
       dispatch(failure(message));
       console.log(error);
+    });
+};
+
+export const getArticleTags = get => async dispatch => {
+  dispatch(FetchAction(true));
+  return await axiosInstance
+    .get('/article/tags')
+    .then(response => {
+      // get list of tags from API
+      dispatch(updateTagsList(response.data.tags));
+      dispatch(FetchAction(false));
+    })
+    .catch(error => {
+      console.log(error);
+      dispatch(failure('Failed to get Tags'));
+      dispatch(FetchAction(false));
     });
 };
