@@ -1,22 +1,27 @@
 import { profileReducer } from '../profile';
 
 import {
-  SET_PROFILE,
-  PROFILE_ERROR,
-  SAVING_PROFILE,
-  EDITING_PROFILE,
-  FETCHING_PROFILE,
+    SET_PROFILE,
+    PROFILE_ERROR,
+    SAVING_PROFILE,
+    EDITING_PROFILE,
+    FETCHING_PROFILE, USERS_LIST,
 } from '../../actions/types';
 
 describe('profile reducer', () => {
   let profileData;
   let beforeState;
+  let user_list;
+  let beforeStateList;
+
   beforeEach(() => {
     profileData = {
       username: 'test',
       bio: 'test_bio',
     };
+    user_list ={data: "responseData", followedUser: "user", follow: true};
 
+    beforeStateList = {usersList:[]};
     beforeState = {};
   });
 
@@ -61,5 +66,11 @@ describe('profile reducer', () => {
     expect(afterState).toEqual({
       profileErrors: errorMessage,
     });
+  });
+
+  it('updates follow status ', () => {
+    const action = { type: USERS_LIST, payload: user_list };
+    const afterState = profileReducer(beforeStateList, action);
+    expect(afterState).toEqual({"followers": 0, "following": 0, "usersList": []});
   });
 });

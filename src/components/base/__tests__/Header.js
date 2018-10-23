@@ -3,7 +3,7 @@ import React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import configureMockStore from 'redux-mock-store';
-import Header from '../Header';
+import Header, {FollowData} from '../Header';
 
 Enzyme.configure({ adapter: new Adapter() });
 describe('header tests', () => {
@@ -23,5 +23,9 @@ describe('header tests', () => {
   it('renders without crashing when not logged in', () => {
     store = mockStore({ authentication: { isLoggedIn: false } });
     shallow(<Header isLoggedIn store={store} />);
+  });
+
+   it('renders FollowData without crashing ', () => {
+    shallow(<FollowData/>);
   });
 });

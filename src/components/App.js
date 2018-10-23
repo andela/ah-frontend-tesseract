@@ -12,6 +12,7 @@ import ArticlesView from './articles/ArticlesView';
 import ArticleView from './articles/ArticleView';
 import Profile from '../containers/ProfileContainer';
 import AuthRequiredRoute from './base/AuthRequiredRoute';
+import UsersList from "./profile/UsersList";
 
 class App extends Component {
   componentWillMount() {
@@ -35,6 +36,7 @@ class App extends Component {
           <Route path="/articles/:slug" component={ArticleView} />
           <Route path="/profile/:username" component={Profile} />
           <AuthRequiredRoute path="/profile" component={Profile} />
+          <AuthRequiredRoute path="/users" component={UsersList} />
         </Switch>
       </div>
     );
@@ -42,3 +44,5 @@ class App extends Component {
 }
 
 export { App as default };
+
+

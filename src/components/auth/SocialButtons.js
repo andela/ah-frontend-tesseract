@@ -10,10 +10,11 @@ class SocialButtons extends React.Component {
     // redirect user on successful successful login
     // render popup on failure to login from the API
     const message = "Failed to login with " + provider;
-    {
-      localStorage.getItem("token")
-        ? this.props.history.push("/")
-        : M.toast({html: message,classes:"red darken-3"});
+    if ( localStorage.getItem("token") ){
+        this.props.history.push('/');
+        this.props.history.go()
+    } else {
+         M.toast({html: message,classes:"red darken-3"});
     }
   };
 
