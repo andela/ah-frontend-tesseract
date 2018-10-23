@@ -2,15 +2,15 @@ import configureMockStore from 'redux-mock-store';
 import MockAdapter from 'axios-mock-adapter';
 import { axiosInstance } from '../../globals';
 import {
-  FETCHING_PROFILE,
-  SET_PROFILE,
-  SAVING_PROFILE,
-  PROFILE_ERROR,
+    FETCHING_PROFILE,
+    SET_PROFILE,
+    SAVING_PROFILE,
+    PROFILE_ERROR, USERS_LIST,
 } from '../types';
 import {
-  handleGetProfileResponse,
-  handleGetSpecificUserProfile,
-  handleEditProfile,
+    handleGetProfileResponse,
+    handleGetSpecificUserProfile,
+    handleEditProfile, getUsers, followUser, unFollowUser,
 } from '../profile';
 
 describe('profile actions', () => {
@@ -104,4 +104,55 @@ describe('profile actions', () => {
 
     expect(store.getActions()).toEqual(expected);
   });
+
+  it('get list of users', async () => {
+    httpMock.onGet('/profiles/users').reply(200, []);
+    getUsers(' ')(store.dispatch);
+    await flushAllPromises();
+    expect(store.getActions()).toEqual([
+      { type: USERS_LIST, payload: {data:[]} }
+    ]);
+  });
+
+
+  it('fails to get list of users', async () => {
+    httpMock.onGet('/profiles/users').reply(400, []);
+    getUsers('')(store.dispatch);
+    await flushAllPromises();
+    expect(store.getActions()).toEqual([]);
+  });
+
+
+  it('should follow user', async () => {
+    httpMock.onPost('/profiles/user/follow').reply(200, []);
+    followUser("user")(store.dispatch);
+    await flushAllPromises();
+    expect(store.getActions()).toEqual([
+        { type: FETCHING_PROFILE, payload: true },
+      { type: USERS_LIST, payload: {"data": [], "follow": true, "followedUser": "user"}},
+      { type: FETCHING_PROFILE, payload: false },
+    ]);
+  });
+
+   it('should un follow user', async () => {
+    httpMock.onDelete('/profiles/user/follow').reply(200, []);
+    unFollowUser("user")(store.dispatch);
+    await flushAllPromises();
+    expect(store.getActions()).toEqual([
+        { type: FETCHING_PROFILE, payload: true },
+      { type: USERS_LIST, payload: {"data": [], "follow": false, "followedUser": "user"}},
+      { type: FETCHING_PROFILE, payload: false },
+    ]);
+  });
+
+   it('should fail on unFollow', async () => {
+    httpMock.onDelete('/profiles/user/follow').reply(ErrorEvent, []);
+    unFollowUser("user")(store.dispatch);
+    await flushAllPromises();
+    expect(store.getActions()).toEqual([
+        { type: FETCHING_PROFILE, payload: true },
+      { type: FETCHING_PROFILE, payload: false },
+    ]);
+  });
+
 });

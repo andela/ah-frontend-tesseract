@@ -13,7 +13,7 @@ export default class ProfileDropDown extends React.Component {
 
     return (
       <li>
-        <a href="#!" className="dropdown-trigger" data-target="dropdown">
+        <a href='' className="dropdown-trigger" data-target="dropdown">
           <i className="material-icons">person</i>
         </a>
 
@@ -24,7 +24,7 @@ export default class ProfileDropDown extends React.Component {
             </Link>
           </li>
           <li>
-            <a href="#!" onClick={logout} className="waves-effect">Logout</a>
+            <a href='' onClick={logout} className="waves-effect">Logout</a>
           </li>
         </ul>
       </li>

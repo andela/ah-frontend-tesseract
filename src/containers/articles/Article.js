@@ -3,23 +3,27 @@ import ArticleForm from "../../components/articles/CreateArticle";
 import "../../components/styles/articles.scss";
 import { connect } from "react-redux";
 import {
-  createArticle,
-  previewArticle,
-  publishArticle,
-  viewArticle,
-  updateArticle,
-  clearMessage,
-  getArticleTags
+    createArticle,
+    previewArticle,
+    publishArticle,
+    viewArticle,
+    updateArticle,
+    clearMessage,
+    getArticleTags, updateStoreArticle
 } from "../../actions";
+import {articleForm} from '../../reducers/articles'
 import ArticlePreview from "../../components/articles/ArticlePreview";
 import M from "materialize-css";
 import PropTypes from "prop-types";
 
 
 class Article extends React.Component {
-  async componentWillMount() {
-    await this.props.getArticleTags(true);
-  }
+
+    async componentWillMount() {
+     await this.props.getArticleTags(true);
+
+  if(!this.props.onPreview && !this.props.onEdit) await this.props.createArticle(articleForm);
+   }
 
   componentDidMount() {
     if (this.props.onEdit) {
@@ -183,6 +187,7 @@ export default connect(
     viewArticle,
     updateArticle,
     clearMessage,
-    getArticleTags
+    getArticleTags,
+      updateStoreArticle
   }
 )(Article);

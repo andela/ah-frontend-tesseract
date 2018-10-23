@@ -7,7 +7,6 @@ import {
   editArticle,
   getArticle,
   updateArticle,
-  updateStoreArticle,
   viewArticle
 } from "../../actions";
 import Modal from "../common/Modal";
@@ -20,13 +19,9 @@ import RatingStars from './Rating';
 import { handleRating } from "../../actions/rating";
 
 class ArticleView extends React.Component {
-  componentDidMount() {
-    this.props.getArticle(this.props.match.params.slug);
-  }
 
-  componentWillUnmount() {
-    // Initialize state on exiting the component
-    this.props.updateStoreArticle({});
+  componentWillMount() {
+    this.props.getArticle(this.props.match.params.slug);
   }
 
   confirmDelete = async () => {
@@ -150,8 +145,7 @@ export default connect( mapStateToProps,
     deleteAction,
     deleteArticle,
     getArticle,
-    updateStoreArticle,
-    handleRating,
+    handleRating
   }
 )(ArticleView);
 

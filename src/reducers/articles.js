@@ -17,6 +17,19 @@ import {
     ARTICLE_TAGS
 } from "../actions/types";
 
+export const articleForm = {
+title: "",
+body: EditorState.createEmpty(),
+description: "",
+slug: "",
+message: "",
+articlesList: [],
+  paginationData:{
+      totalPages:0
+  },
+tagsList: [] // These are form tags
+};
+
 export const articleState = {
   apiArticle: {},
   title: "",

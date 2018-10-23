@@ -94,9 +94,9 @@ export class ProfileForm extends React.Component {
           this.setState({image:result.info.secure_url});
           widget.close();
         }
-      })
+      });
       widget.open()
-    }
+    };
 
     render() {
       return (
