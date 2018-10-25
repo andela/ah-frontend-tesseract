@@ -6,6 +6,7 @@ import { ConfirmPasswordResetReducer } from './confirmPasswordReset';
 import {articleReducer} from "./articles";
 import landingReducer from "./landingStories";
 import { profileReducer } from './profile';
+import { ratingReducer } from "./ratingReducer";
 
 export default combineReducers({
   create_user: signUpReducer,
@@ -15,4 +16,5 @@ export default combineReducers({
   article: articleReducer,
   landing:landingReducer,
   profile: profileReducer,
+  articleRating: ratingReducer,
 });
