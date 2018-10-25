@@ -111,8 +111,6 @@ class SignUpForm extends Component {
 
     };
 
-
-
     create_form_inputs(){
         /*
         * method creates four form inputs basing on the objects declared in the array below
@@ -162,10 +160,7 @@ class SignUpForm extends Component {
                                 </form>
                             </div>
                         </div>
-
                 </div>
-
-
         );
     }
 }
@@ -208,7 +203,6 @@ const SignUpButton = (props) =>{
                     :
                     <span>Sign up </span>
                 }
-
 
             </button>
         </div>

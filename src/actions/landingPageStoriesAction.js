@@ -22,7 +22,7 @@ const userProfile= payload => {
     }
 };
 
-const fetching =payload =>{
+export const fetching =payload =>{
     return{
         type:FETCHING,
         payload

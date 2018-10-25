@@ -71,26 +71,67 @@
   color:rgba(0,0,0,.54)!important;
 }
 
-.collection  {
+.collection {
   border: none;
-  .collection-item{
-    border-top: 0.5px solid rgba(224,224,224,0.8);
+  .collection-item {
+    border-top: 0.5px solid rgba(224, 224, 224, 0.8);
     border-bottom: none;
   }
 
   .collection-item:last-child {
-    border-bottom: 0.5px solid rgba(224,224,224,0.8);
+    border-bottom: 0.5px solid rgba(224, 224, 224, 0.8);
   }
 
-  li{
-    a{
+  li {
+    a {
       text-decoration: none;
-      color:rgba(0,0,0,0.87);
+      color: rgba(0, 0, 0, 0.87);
     }
   }
+}
 
 
+.comments-editor {
+  margin-top: 5px;
+  padding: 0 20px;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, .03);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .03);
 
+  .comment-btn {
+    margin-top: 0;
+  }
+
+  .comments-textarea{
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.custom-card{
+  background: #fff;
+  -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.04);
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+  border: 1px solid rgba(0,0,0,.09);
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.comments-card{
+
+  .row {
+    margin-left: 0;
+    margin-bottom: 0;
+  }
+}
+
+.edit-tools {
+  margin-left: 2%;
+
+  .link {
+    width: 30px;
+    height: 30px;
+    margin: 2px;
+  }
 }
 
 .profile-image{
@@ -104,4 +145,20 @@
   max-height: 500px;
   margin-left: 2%;
 
+}
+
+.comments-photo{
+  height: 50px !important;
+  width: 50px !important;
+}
+
+.edit-elemements{
+  margin-left: 5px;
+  a{
+    width: 30px;
+    height: 30px;
+  }
+  i{
+    margin-right: 0;
+  }
 }

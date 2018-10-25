@@ -48,7 +48,7 @@ const StoryDisplay = (props) =>{
     );
 };
 
-const getDate =(dateValue)=>{
+export const getDate =(dateValue)=>{
 
     const DATE_OPTIONS = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
     return new Date(dateValue).toLocaleDateString('en-US', DATE_OPTIONS);
